@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REPARO TODO - Servicios Generales | San Francisco - Córdoba</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#0B4EA2',
+                            darkBlue: '#07326B',
+                            lightBlue: '#1D70B8',
+                            accent: '#F2994A',
+                            grayBg: '#F8FAFC',
+                            cardBg: '#FFFFFF'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hexagon {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+        .hexagon-border {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0B4EA2;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #07326B;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased selection:bg-brand-blue selection:text-white">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-40 bg-brand-blue text-white shadow-md transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center p-1 shadow-md transition transform group-hover:scale-105">
+                        <div class="w-full h-full border-2 border-brand-blue rounded-lg flex items-center justify-center font-black text-brand-blue text-xl tracking-tighter">
+                            RT
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-extrabold text-xl tracking-wider uppercase leading-none">REPARO TODO</span>
+                        <span class="text-xs text-blue-200 tracking-widest font-medium uppercase mt-0.5">Servicios Generales</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Menu -->
+                <nav class="hidden md:flex items-center gap-8 font-medium">
+                    <a href="#inicio" class="hover:text-amber-300 transition-colors py-1">Inicio</a>
+                    <a href="#rubros" class="hover:text-amber-300 transition-colors py-1">Servicios y Rubros</a>
+                    <a href="#galeria" class="hover:text-amber-300 transition-colors py-1">Galería de Trabajos</a>
+                    <a href="#nosotros" class="hover:text-amber-300 transition-colors py-1">Nosotros</a>
+                    <a href="#contacto" class="hover:text-amber-300 transition-colors py-1">Contacto</a>
+                </nav>
+
+                <!-- Phone CTA Button -->
+                <div class="hidden lg:flex items-center gap-3">
+                    <a href="https://wa.me/5493564652571?text=Hola%20Rodrigo,%20quisiera%20consultar%20por%20un%20presupuesto" target="_blank" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2.5 px-5 rounded-lg shadow-lg hover:shadow-xl transition transform hover:-translate-y-0.5 flex items-center gap-2">
+                        <i class="fab fa-whatsapp text-lg">
+                        </i>
+                        <span>3564 65-2571</span>
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden text-2xl focus:outline-none p-2 rounded-lg hover:bg-brand-darkBlue">
+                    <i class="fas fa-bars" id="menu-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-darkBlue border-t border-blue-800 px-4 pt-2 pb-6 space-y-3">
+            <a href="#inicio" class="block py-2 text-gray-100 hover:text-amber-300 border-b border-blue-900/50">Inicio</a>
+            <a href="#rubros" class="block py-2 text-gray-100 hover:text-amber-300 border-b border-blue-900/50">Servicios y Rubros</a>
+            <a href="#galeria" class="block py-2 text-gray-100 hover:text-amber-300 border-b border-blue-900/50">Galería de Trabajos</a>
+            <a href="#nosotros" class="block py-2 text-gray-100 hover:text-amber-300 border-b border-blue-900/50">Nosotros</a>
+            <a href="#contacto" class="block py-2 text-gray-100 hover:text-amber-300 border-b border-blue-900/50">Contacto</a>
+            <a href="https://wa.me/5493564652571?text=Hola%20Rodrigo,%20consulto%20desde%20la%20web" target="_blank" class="mt-4 w-full bg-emerald-500 text-white font-bold py-3 px-4 rounded-lg text-center flex items-center justify-center gap-2">
+                <i class="fab fa-whatsapp text-xl"></i> WhatsApp: 3564 65-2571
+            </a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="inicio" class="relative bg-gradient-to-br from-brand-blue via-brand-darkBlue to-slate-900 text-white py-20 lg:py-28 overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Column Text -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 bg-blue-500/20 border border-blue-400/30 rounded-full px-4 py-1.5 text-blue-200 text-sm font-semibold tracking-wide uppercase backdrop-blur-sm">
+                        <i class="fas fa-map-marker-alt text-amber-400"></i> San Francisco - Córdoba & Zona
+                    </div>
+                    
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-none">
+                        soluciones integrales para tu <span class="text-amber-400">hogar</span> o <span class="text-amber-400">empresa</span>
+                    </h1>
+                    
+                    <p class="text-lg sm:text-xl text-blue-100 font-light max-w-2xl mx-auto lg:mx-0">
+                        Acompañamos tus proyectos de construcción, reparación y mantenimiento con profesionalismo, puntualidad y acabados de primera calidad.
+                    </p>
+
+                    <div class="pt-4 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                        <a href="https://wa.me/5493564652571?text=Hola%20Rodrigo,%20necesito%20un%20presupuesto" target="_blank" class="w-full sm:w-auto bg-amber-500 hover:bg-amber-400 text-slate-900 font-extrabold py-4 px-8 rounded-xl shadow-xl hover:shadow-2xl transition transform hover:-translate-y-1 flex items-center justify-center gap-3 text-lg">
+                            <i class="fab fa-whatsapp text-2xl"></i> Solicitar Presupuesto
+                        </a>
+                        <a href="#rubros" class="w-full sm:w-auto bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-sm text-white font-semibold py-4 px-8 rounded-xl transition flex items-center justify-center gap-2">
+                            Ver Rubros <i class="fas fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+
+                    <!-- Badges -->
+                    <div class="pt-8 border-t border-blue-700/50 grid grid-cols-3 gap-4 text-center">
+                        <div class="p-2">
+                            <div class="text-2xl sm:text-3xl font-extrabold text-amber-400">6+</div>
+                            <div class="text-xs text-blue-200 uppercase tracking-wider">Especialidades</div>
+                        </div>
+                        <div class="p-2 border-x border-blue-700/50">
+                            <div class="text-2xl sm:text-3xl font-extrabold text-amber-400">100%</div>
+                            <div class="text-xs text-blue-200 uppercase tracking-wider">Garantizados</div>
+                        </div>
+                        <div class="p-2">
+                            <div class="text-2xl sm:text-3xl font-extrabold text-amber-400">Zona</div>
+                            <div class="text-xs text-blue-200 uppercase tracking-wider">San Francisco</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column Card Showcase -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative w-full max-w-md bg-white text-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl border border-blue-100">
+                        <!-- Top Banner Badge -->
+                        <div class="absolute -top-4 right-6 bg-brand-blue text-white px-4 py-1.5 rounded-full text-xs font-black tracking-widest uppercase shadow-md border-2 border-white">
+                            Atención Personalizada
+                        </div>
+
+                        <!-- Brand RT Visual Badge -->
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-16 h-16 bg-brand-blue rounded-2xl flex items-center justify-center p-2 text-white shadow-lg">
+                                <div class="w-full h-full border-2 border-white rounded-xl flex items-center justify-center font-black text-2xl tracking-tighter">
+                                    RT
+                                </div>
+                            </div>
+                            <div>
+                                <h2 class="font-extrabold text-2xl text-brand-darkBlue leading-none">REPARO TODO</h2>
+                                <p class="text-sm font-semibold text-brand-lightBlue uppercase tracking-widest mt-1">SERVICIOS GENERALES</p>
+                            </div>
+                        </div>
+
+                        <!-- Direct Manager Callout -->
+                        <div class="bg-blue-50 border border-blue-200 rounded-2xl p-4 mb-6 flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-brand-blue text-white flex items-center justify-center font-bold text-lg flex-shrink-0">
+                                RA
+                            </div>
+                            <div>
+                                <p class="text-xs uppercase font-bold text-brand-lightBlue tracking-wide">Gerente / Encargado</p>
+                                <p class="text-lg font-extrabold text-slate-800 leading-tight">RODRIGO ARANEDA</p>
+                                <p class="text-xs text-slate-600 mt-0.5"><i class="fas fa-check-circle text-emerald-500 mr-1"></i>Trabajos en toda la zona</p>
+                            </div>
+                        </div>
+
+                        <!-- Quick List -->
+                        <ul class="space-y-3 mb-6 text-sm text-slate-700 font-medium">
+                            <li class="flex items-center gap-3"><i class="fas fa-hammer text-brand-blue w-5"></i> Construcción de Muebles</li>
+                            <li class="flex items-center gap-3"><i class="fas fa-wrench text-brand-blue w-5"></i> Plomería & Cañerías</li>
+                            <li class="flex items-center gap-3"><i class="fas fa-paint-roller text-brand-blue w-5"></i> Pintura General e Impermeabilización</li>
+                            <li class="flex items-center gap-3"><i class="fas fa-trowel text-brand-blue w-5"></i> Albañilería y Reformas</li>
+                            <li class="flex items-center gap-3"><i class="fas fa-bolt text-brand-blue w-5"></i> Electricidad Residencial y Comercial</li>
+                            <li class="flex items-center gap-3"><i class="fas fa-shield-alt text-brand-blue w-5"></i> Herrería de Obra y Estructuras</li>
+                        </ul>
+
+                        <a href="tel:3564652571" class="w-full bg-brand-darkBlue hover:bg-brand-blue text-white text-center font-bold py-3 px-4 rounded-xl block shadow transition">
+                            <i class="fas fa-phone-alt mr-2"></i> Llamar al 3564 65-2571
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICIOS / RUBROS SECTION -->
+    <section id="rubros" class="py-20 bg-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-blue font-bold tracking-widest text-sm uppercase bg-blue-100 px-4 py-1.5 rounded-full">Nuestras Especialidades</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-3">Rubros y Servicios que Realizamos</h2>
+                <div class="w-20 h-1.5 bg-brand-blue mx-auto mt-4 rounded-full"></div>
+                <p class="text-slate-600 mt-4 text-base sm:text-lg"> Ofrecemos mano de obra calificada y solución efectiva para cada área de tu proyecto de vivienda o local comercial. </p>
+            </div>
+
+            <!-- Grid of 6 Services -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- 1. Construcción de Muebles -->
+                <div class="bg-white rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 border border-slate-200/80 group flex flex-col justify-between">
+                    <div>
+                        <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 group-hover:bg-amber-500 group-hover:text-white transition duration-300">
+                            <i class="fas fa-couch"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-blue transition">Construcción de Muebles</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                            Diseño, fabricación y armado de mobiliario a medida. Placards, bajo mesadas, alacenas, escritorios, estanterías y muebles de melamina o madera adaptados a tus espacios.
+                        </p>
+                    </div>
+                    <ul class="text-xs text-slate-500 space-y-2 border-t border-slate-100 pt-4 font-medium">
+                        <li class="flex items-center"><i class="fas fa-check text-emerald-500 mr-2"></i>Muebles a medida</li>
+                        <li class="flex items-center"><i class="fas fa-check text-emerald-500 mr-2"></i>Optimización de espacios</li>
+                        <li class="flex items-center"><i class="fas fa-check text-emerald-500 mr-2"></i>Reparación e instalación</li>
+                    </ul>
+                </div>
+
+                <!-- 2. Plomería -->
+                <div class="bg-white rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 border border-slate-200/80 group flex flex-col justify-between">
+                    <div>
+                        <div class="w-16 h-16 bg-blue-100 text-brand-blue rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 group-hover:bg-brand-blue group-hover:text-white transition duration-300">
+                            <i class="fas fa-faucet"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-blue transition">Plomería y Sanitarios</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                            Instalación y reparación de cañerías de agua fría y caliente, reparación de pérdidas, colocación de griferías, sanitarios, bombas de agua y tanques.
+                        </p>
+                    </div>
+                    <ul class="text-xs text-slate-500 space-y-2 border-t border-slate-100 pt-4 font-medium">
+                        <li class="flex items-center"><i class="fas fa-check text-emerald-500 mr-2"></i>Reparación de filtraciones</li>
+                        <li class="flex items-center"><i class="fas fa-check text-emerald-500 mr-2"></i>Instalaciones de artefactos</li>
+                        <li class="flex items-center"><i class="fas fa-check text-emerald-500 mr-2"></i>Mantenimiento preventivo</li>
+                    </ul>
+                </div>
+
+                <!-- 3. Pintura -->
+                <div class="bg-white rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 border border-slate-200/80 group flex flex-col justify-between">
+                    <div>
+                        <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition duration-300">
+                            <i class="fas fa-paint-roller"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-blue transition">Pintura General</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                            Trabajos de pintura interior y exterior. Aplicación de látex, sintéticos, revestimiento plástico (tipo Tarquini), impermeabilización de techos, paredes y laqueados.
+                        </p>
+                    </div>
+                    <ul class="text-xs text-slate-500 space-y-2 border-t border-slate-100 pt-4 font-medium">
+                        <li class="flex items-center"><i class="fas fa-check text-emerald-500 mr-2"></i>Interiores y Exteriores</li>
+                        <li class="flex items-center"><i class="fas fa-check text-emerald-500 mr-2"></i>Impermeabilizado de techos</li>
+                        <li class="flex items-center"><i class="fas fa-check text-emerald-500 mr-2"></i>Tratamiento de humedad</li>
+                    </ul>
+                </div>
+
+                <!-- 4. Albañilería -->
+                <div class="bg-white rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 border border-slate-200/80 group flex flex-col justify-between">
+                    <div>
+                        <div class="w-16 h-16 bg-red-100 text-red-600 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 group-hover:bg-red-600 group-hover:text-white transition duration-300">
+                            <i class="fas fa-trowel"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-blue transition">Albañilería</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                            Construcción en general, reformas, revoques gruesos y finos, colocación de cerámicos y porcelanatos, carpetas, veredas, tapiados y reparación de mampostería.
+                        </p>
+                    </div>
+                    <ul class="text-xs text-slate-500 space-y-2 border-t border-slate-100 pt-4 font-medium">
+                        <li class="flex items-center"><i class="fas fa-check text-emerald-500 mr-2"></i>Refacciones e ampliaciones</li>
+                        <li class="flex items-center"><i class="fas fa-check text-emerald-500 mr-2"></i>Colocación de pisos y revestimientos</li>
+                        <li class="flex items-center"><i class="fas fa-check text-emerald-500 mr-2"></i>Trabajos de estructura y reparación</li>
+                    </ul>
+                </div>
+
+                <!-- 5. Herrería -->
+                <div class="bg-white rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 border border-slate-200/80 group flex flex-col justify-between">
+                    <div>
+                        <div class="w-16 h-16 bg-slate-200 text-slate-800 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 group-hover:bg-slate-800 group-hover:text-white transition duration-300">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-blue transition">Herrería de Obra</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                            Fabricación de rejas de seguridad, portones corredizos y levadizos, barandas, aleros, galerías metálicas, cerramientos y soldaduras de reparación en general.
+                        </p>
+                    </div>
+                    <ul class="text-xs text-slate-500 space-y-2 border-t border-slate-100 pt-4 font-medium">
+                        <li class="flex items-center"><i class="fas fa-check text-emerald-500 mr-2"></i>Rejas y Portones</li>
+                        <li class="flex items-center"><i class="fas fa-check text-emerald-500 mr-2"></i>Estructuras metálicas</li>
+                        <li class="flex items-center"><i class="fas fa-check text-emerald-500 mr-2"></i>Reparaciones con soldadura</li>
+                    </ul>
+                </div>
+
+                <!-- 6. Electricidad -->
+                <div class="bg-white rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 border border-slate-200/80 group flex flex-col justify-between">
+                    <div>
+                        <div class="w-16 h-16 bg-yellow-100 text-yellow-600 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 group-hover:bg-yellow-500 group-hover:text-white transition duration-300">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-blue transition">Electricidad</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                            Instalaciones eléctricas residenciales y comerciales, armado de tableros, colocación de luminarias LED, llaves térmicas, disyuntores y solución de cortocircuitos.
+                        </p>
+                    </div>
+                    <ul class="text-xs text-slate-500 space-y-2 border-t border-slate-100 pt-4 font-medium">
+                        <li class="flex items-center"><i class="fas fa-check text-emerald-500 mr-2"></i>Instalaciones completas</li>
+                        <li class="flex items-center"><i class="fas fa-check text-emerald-500 mr-2"></i>Tableros y protecciones</li>
+                        <li class="flex items-center"><i class="fas fa-check text-emerald-500 mr-2"></i>Iluminación LED interior/exterior</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- GALERIA DINAMICA DE TRABAJOS REALIZADOS -->
+    <section id="galeria" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                <div>
+                    <span class="text-brand-blue font-bold tracking-widest text-sm uppercase bg-blue-100 px-4 py-1.5 rounded-full">Portafolio</span>
+                    <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-3">Trabajos Realizados en la Zona</h2>
+                    <p class="text-slate-600 mt-2 text-base">Explora proyectos recientes ejecutados por nuestro equipo.</p>
+                </div>
+                
+                <!-- Action Button for Uploading Image -->
+                <button id="open-upload-modal" class="bg-brand-blue hover:bg-brand-darkBlue text-white font-bold py-3 px-6 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm self-start md:self-auto">
+                    <i class="fas fa-plus-circle text-lg"></i> Cargar Nuevo Trabajo
+                </button>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="flex flex-wrap gap-2 mb-8 border-b border-slate-200 pb-4" id="gallery-filters">
+                <button data-filter="all" class="filter-btn active bg-brand-blue text-white font-semibold px-4 py-2 rounded-xl text-sm transition">Todos</button>
+                <button data-filter="muebles" class="filter-btn bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition">Muebles</button>
+                <button data-filter="plomeria" class="filter-btn bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition">Plomería</button>
+                <button data-filter="pintura" class="filter-btn bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition">Pintura</button>
+                <button data-filter="albanileria" class="filter-btn bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition">Albañilería</button>
+                <button data-filter="herreria" class="filter-btn bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition">Herrería</button>
+                <button data-filter="electricidad" class="filter-btn bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition">Electricidad</button>
+            </div>
+
+            <!-- Gallery Grid Container -->
+            <div id="gallery-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Dynamic cards populated via JavaScript -->
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SOBRE NOSOTROS & GERENCIA -->
+    <section id="nosotros" class="py-20 bg-slate-900 text-white relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Banner / Image representation -->
+                <div class="lg:col-span-5">
+                    <div class="relative bg-gradient-to-tr from-brand-blue to-blue-600 rounded-3xl p-8 border border-blue-400/30 shadow-2xl">
+                        <div class="text-center space-y-4">
+                            <div class="w-24 h-24 bg-white text-brand-blue rounded-full mx-auto flex items-center justify-center font-black text-4xl shadow-inner border-4 border-amber-400">
+                                RT
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-black uppercase tracking-wide">REPARO TODO</h3>
+                                <p class="text-amber-400 text-sm font-bold uppercase tracking-widest">Servicios Generales</p>
+                            </div>
+                            <div class="py-4 border-y border-white/10 text-left space-y-2 text-sm text-blue-100">
+                                <p class="flex items-center gap-3"><i class="fas fa-user-check text-amber-400"></i> **Gerente:** Rodrigo Araneda</p>
+                                <p class="flex items-center gap-3"><i class="fas fa-map-marker-alt text-amber-400"></i> **Ubicación:** San Francisco - CBA</p>
+                                <p class="flex items-center gap-3"><i class="fas fa-phone-alt text-amber-400"></i> **Teléfono:** 3564 65-2571</p>
+                                <p class="flex items-center gap-3"><i class="fas fa-truck text-amber-400"></i> **Cobertura:** Trabajos en la zona</p>
+                            </div>
+                            <p class="text-xs text-blue-200 italic">
+                                "Compromiso con la calidad, seriedad en el cumplimiento de plazos y atención directa a cada uno de nuestros clientes."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Description -->
+                <div class="lg:col-span-7 space-y-6">
+                    <span class="text-amber-400 font-bold tracking-widest text-sm uppercase bg-amber-400/10 border border-amber-400/20 px-4 py-1.5 rounded-full">Sobre Nuestra Empresa</span>
+                    <h2 class="text-3xl sm:text-4xl font-black leading-tight">Solución Única para Múltiples Necesidades en la Zona</h2>
+                    <p class="text-slate-300 text-base sm:text-lg leading-relaxed">
+                        Bajo la dirección de **Rodrigo Araneda**, **REPARO TODO** nació para brindar respuesta eficiente y confiable a propietarios, comercios e industrias en San Francisco y alrededores.
+                    </p>
+                    <p class="text-slate-300 text-base leading-relaxed">
+                        Entendemos lo difícil que es coordinar a diferentes especialistas para una sola obra o mantenimiento. Por eso, centralizamos los principales rubros de la construcción y mantenimiento: **mueblería, plomería, pintura, albañilería, herrería y electricidad** bajo una misma gestión seria y garantizada.
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                        <div class="bg-slate-800/80 p-4 rounded-xl border border-slate-700 flex items-start gap-3">
+                            <i class="fas fa-handshake text-amber-400 text-2xl mt-1"></i>
+                            <div>
+                                <h4 class="font-bold text-white text-base">Atención Directa</h4>
+                                <p class="text-xs text-slate-400">Trato personalizado con Rodrigo Araneda para presupuestos y seguimiento.</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-800/80 p-4 rounded-xl border border-slate-700 flex items-start gap-3">
+                            <i class="fas fa-certificate text-amber-400 text-2xl mt-1"></i>
+                            <div>
+                                <h4 class="font-bold text-white text-base">Trabajos Garantizados</h4>
+                                <p class="text-xs text-slate-400">Utilizamos materiales de excelente calidad y técnicas profesionales.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACTO SECTION -->
+    <section id="contacto" class="py-20 bg-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-blue font-bold tracking-widest text-sm uppercase bg-blue-100 px-4 py-1.5 rounded-full">Ponete en Contacto</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-3">Solicitá tu Presupuesto sin Cargo</h2>
+                <div class="w-20 h-1.5 bg-brand-blue mx-auto mt-4 rounded-full"></div>
+                <p class="text-slate-600 mt-4 text-base sm:text-lg">Contanos tu proyecto o la reparación que necesitás y te responderemos a la brevedad.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                
+                <!-- Info cards -->
+                <div class="lg:col-span-5 space-y-6">
+                    
+                    <!-- Card 1 -->
+                    <a href="https://wa.me/5493564652571?text=Hola%20Rodrigo,%20quisiera%20pedir%20un%20presupuesto" target="_blank" class="block bg-white p-6 rounded-2xl shadow-md border border-slate-200 hover:border-emerald-500 hover:shadow-lg transition group">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl group-hover:bg-emerald-500 group-hover:text-white transition">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold text-emerald-600 uppercase tracking-wider">WhatsApp Directo</p>
+                                <h4 class="text-xl font-extrabold text-slate-900">3564 65-2571</h4>
+                                <p class="text-xs text-slate-500">Respuesta rápida y presupuestos</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Card 2 -->
+                    <div class="bg-white p-6 rounded-2xl shadow-md border border-slate-200 flex items-center gap-4">
+                        <div class="w-14 h-14 bg-blue-100 text-brand-blue rounded-2xl flex items-center justify-center text-2xl">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-brand-blue uppercase tracking-wider">Gerente Responsable</p>
+                            <h4 class="text-xl font-extrabold text-slate-900">RODRIGO ARANEDA</h4>
+                            <p class="text-xs text-slate-500">Coordinación de obras y reparaciones</p>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="bg-white p-6 rounded-2xl shadow-md border border-slate-200 flex items-center gap-4">
+                        <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-2xl">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-amber-600 uppercase tracking-wider">Zona de Cobertura</p>
+                            <h4 class="text-xl font-extrabold text-slate-900">San Francisco - CBA</h4>
+                            <p class="text-xs text-slate-500">Atención en San Francisco y localidades vecinas</p>
+                        </div>
+                    </div>
+
+                    <!-- Card Callout -->
+                    <div class="bg-brand-blue text-white p-6 rounded-2xl shadow-md">
+                        <h4 class="font-bold text-lg mb-2"><i class="fas fa-clock mr-2 text-amber-400"></i> Horarios de Atención</h4>
+                        <p class="text-sm text-blue-100">Lunes a Viernes: 07:30 a 19:30 hs</p>
+                        <p class="text-sm text-blue-100">Sábados: 08:00 a 13:00 hs</p>
+                    </div>
+
+                </div>
+
+                <!-- Contact Form -->
+                <div class="lg:col-span-7">
+                    <form id="contact-form" class="bg-white p-8 rounded-3xl shadow-xl border border-slate-200 space-y-6">
+                        <h3 class="text-2xl font-bold text-slate-900 mb-2">Enviar una Consulta</h3>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">Nombre Completo *</label>
+                                <input type="text" required placeholder="Ej: Juan Pérez" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">Teléfono / WhatsApp *</label>
+                                <input type="tel" required placeholder="Ej: 3564 123456" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">Rubro de Consulta</label>
+                                <select class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition">
+                                    <option value="Construcción de Muebles">Construcción de Muebles</option>
+                                    <option value="Plomería">Plomería</option>
+                                    <option value="Pintura">Pintura</option>
+                                    <option value="Albañilería">Albañilería</option>
+                                    <option value="Herrería">Herrería</option>
+                                    <option value="Electricidad">Electricidad</option>
+                                    <option value="Otro / Varios">Varios Rubros / Consulta General</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">Localidad / Barrio</label>
+                                <input type="text" placeholder="Ej: San Francisco" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Detalle de lo que necesitás realizar *</label>
+                            <textarea required rows="4" placeholder="Describí brevemente el trabajo que querés consultar..." class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent transition"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-brand-blue hover:bg-brand-darkBlue text-white font-extrabold py-4 rounded-xl shadow-lg hover:shadow-xl transition transform hover:-translate-y-0.5 text-lg flex items-center justify-center gap-2">
+                            <i class="fas fa-paper-plane"></i> Enviar Mensaje a Rodrigo
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-brand-blue text-white rounded-lg flex items-center justify-center font-black text-lg">
+                        RT
+                    </div>
+                    <div>
+                        <span class="font-bold text-white text-lg tracking-wider">REPARO TODO</span>
+                        <p class="text-xs text-slate-500">Servicios Generales - San Francisco, CBA</p>
+                    </div>
+                </div>
+
+                <div class="text-sm text-center md:text-right">
+                    <p class="text-slate-300">Gerente: <span class="font-bold text-white">RODRIGO ARANEDA</span></p>
+                    <p class="text-xs text-slate-500 mt-1">© <span id="current-year"></span> REPARO TODO. Todos los derechos reservados. Trabajos en la zona.</p>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL FOR UPLOADING NEW WORK PHOTO -->
+    <div id="upload-modal" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative animate-fadeIn max-h-[90vh] overflow-y-auto">
+            
+            <!-- Close Button -->
+            <button id="close-upload-modal" class="absolute top-6 right-6 text-slate-400 hover:text-slate-700 text-2xl font-bold focus:outline-none">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="mb-6">
+                <div class="w-12 h-12 bg-blue-100 text-brand-blue rounded-xl flex items-center justify-center text-xl mb-3">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <h3 class="text-2xl font-black text-slate-900">Cargar Nuevo Trabajo</h3>
+                <p class="text-sm text-slate-500">Agregá una foto con su categoría para actualizar la galería en tiempo real.</p>
+            </div>
+
+            <form id="upload-form" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-700 mb-1">Título del Trabajo *</label>
+                    <input type="text" id="work-title" required placeholder="Ej: Fabricación de Placard en Melamina" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-700 mb-1">Rubro / Categoría *</label>
+                    <select id="work-category" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                        <option value="muebles">Construcción de Muebles</option>
+                        <option value="plomeria">Plomería</option>
+                        <option value="pintura">Pintura</option>
+                        <option value="albanileria">Albañilería</option>
+                        <option value="herreria">Herrería</option>
+                        <option value="electricidad">Electricidad</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-700 mb-1">URL de Imagen o Cargar Foto *</label>
+                    <div class="space-y-2">
+                        <input type="url" id="work-image-url" placeholder="Ej: https://images.unsplash.com/photo-..." class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                        <p class="text-xs text-center text-slate-400 font-semibold">- O seleccionar archivo local -</p>
+                        <input type="file" id="work-image-file" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-brand-blue hover:file:bg-blue-100">
+                    </div>
+                </div>
+
+                <!-- Preview Box -->
+                <div id="image-preview-container" class="hidden">
+                    <p class="text-xs font-bold text-slate-600 mb-1">Vista Previa:</p>
+                    <img id="image-preview" src="" alt="Previsualización" class="w-full h-40 object-cover rounded-xl border border-slate-200">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-700 mb-1">Descripción Breve *</label>
+                    <textarea id="work-desc" required rows="3" placeholder="Detallá los trabajos realizados en esta obra..." class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-700 mb-1">Ubicación / Zona</label>
+                    <input type="text" id="work-location" placeholder="Ej: Barrio Sarmiento, San Francisco" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                </div>
+
+                <div class="pt-2 flex gap-3">
+                    <button type="button" id="cancel-upload" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 rounded-xl transition text-sm">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="w-1/2 bg-brand-blue hover:bg-brand-darkBlue text-white font-bold py-3 rounded-xl transition text-sm shadow-md">
+                        Guardar Trabajo
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- NOTIFICATION MODAL / TOAST -->
+    <div id="notification-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl space-y-4">
+            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full mx-auto flex items-center justify-center text-3xl">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h4 class="text-2xl font-bold text-slate-900" id="notification-title">¡Mensaje Enviado!</h4>
+            <p class="text-sm text-slate-600" id="notification-message">Gracias por comunicarte con REPARO TODO. Rodrigo Araneda se pondrá en contacto pronto.</p>
+            <button id="close-notification" class="w-full bg-brand-blue hover:bg-brand-darkBlue text-white font-bold py-2.5 rounded-xl text-sm transition">
+                Aceptar
+            </button>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Initial sample portfolio data
+        const initialWorks = [
+            {
+                id: 1,
+                title: "Amoblamiento de Cocina Completo",
+                category: "muebles",
+                categoryName: "Construcción de Muebles",
+                image: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=800&q=80",
+                description: "Fabricación e instalación de alacenas y bajo mesadas a medida en melamina texturada con cierre suave.",
+                location: "San Francisco - CBA"
+            },
+            {
+                id: 2,
+                title: "Instalación de Red de Cañerías y Sanitarios",
+                category: "plomeria",
+                categoryName: "Plomería",
+                image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
+                description: "Recambio completo de griferías, prueba de presión de agua e instalación de termo tanque.",
+                location: "San Francisco - CBA"
+            },
+            {
+                id: 3,
+                title: "Pintura Fachada e Impermeabilizado de Techo",
+                category: "pintura",
+                categoryName: "Pintura",
+                image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=800&q=80",
+                description: "Pintado de exteriores con revestimiento plástico acrílico y sellado impermeabilizante de losa.",
+                location: "San Francisco - CBA"
+            },
+            {
+                id: 4,
+                title: "Reforma de Muro y Colocación de Porcelanato",
+                category: "albanileria",
+                categoryName: "Albañilería",
+                image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800&q=80",
+                description: "Levantamiento de pared divisoria, revoque fino y revestimiento de pisos de alta durabilidad.",
+                location: "Zona San Francisco"
+            },
+            {
+                id: 5,
+                title: "Portón Automatizado y Rejas de Protección",
+                category: "herreria",
+                categoryName: "Herrería",
+                image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80",
+                description: "Soldadura de portón corredizo en tubo estructural con pintura anticorrosiva de acabado mate.",
+                location: "San Francisco - CBA"
+            },
+            {
+                id: 6,
+                title: "Tablero Eléctrico Domiciliario e Iluminación LED",
+                category: "electricidad",
+                categoryName: "Electricidad",
+                image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=800&q=80",
+                description: "Renovación total de cableado, armado de tablero con disyuntor y térmicas por sectores.",
+                location: "San Francisco - CBA"
+            }
+        ];
+
+        // Load works from localStorage or fallback to defaults
+        function getWorks() {
+            const saved = localStorage.getItem('reparo_todo_works');
+            if (saved) {
+                try {
+                    return JSON.parse(saved);
+                } catch(e) {
+                    return initialWorks;
+                }
+            }
+            return initialWorks;
+        }
+
+        function saveWorks(works) {
+            localStorage.setItem('reparo_todo_works', JSON.stringify(works));
+        }
+
+        let currentWorks = getWorks();
+        let activeFilter = 'all';
+
+        // Set Current Year in Footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            if (mobileMenu.classList.contains('hidden')) {
+                menuIcon.className = 'fas fa-bars';
+            } else {
+                menuIcon.className = 'fas fa-times';
+            }
+        });
+
+        // Gallery Rendering Logic
+        const galleryContainer = document.getElementById('gallery-container');
+
+        function renderGallery() {
+            galleryContainer.innerHTML = '';
+            
+            const filteredWorks = activeFilter === 'all' 
+                ? currentWorks 
+                : currentWorks.filter(work => work.category === activeFilter);
+
+            if (filteredWorks.length === 0) {
+                galleryContainer.innerHTML = `
+                    <div class="col-span-full py-12 text-center text-slate-400">
+                        <i class="fas fa-folder-open text-4xl mb-3 block"></i>
+                        <p class="font-semibold">No se encontraron trabajos registrados en este rubro.</p>
+                        <p class="text-xs mt-1">¡Sé el primero en agregar una imagen a esta categoría!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filteredWorks.forEach(work => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-2xl overflow-hidden shadow-md border border-slate-200/80 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group';
+                
+                // Icon map for categories
+                const categoryIcons = {
+                    muebles: 'fa-couch',
+                    plomeria: 'fa-faucet',
+                    pintura: 'fa-paint-roller',
+                    albanileria: 'fa-trowel',
+                    herreria: 'fa-shield-alt',
+                    electricidad: 'fa-bolt'
+                };
+
+                const icon = categoryIcons[work.category] || 'fa-tools';
+
+                card.innerHTML = `
+                    <div>
+                        <div class="relative h-52 overflow-hidden bg-slate-100">
+                            <img src="${work.image}" alt="${work.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.onerror=null; this.src='https://placehold.co/800x600/0B4EA2/FFFFFF?text=REPARO+TODO';">
+                            <span class="absolute top-3 right-3 bg-brand-blue/90 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow">
+                                <i class="fas ${icon}"></i> ${work.categoryName || work.category}
+                            </span>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="font-bold text-lg text-slate-900 group-hover:text-brand-blue transition line-clamp-1 mb-2">${work.title}</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-4 line-clamp-3">${work.description}</p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-0 border-t border-slate-100 mt-auto flex items-center justify-between text-xs text-slate-500 font-medium">
+                        <span><i class="fas fa-map-marker-alt text-amber-500 mr-1"></i> ${work.location || 'San Francisco - CBA'}</span>
+                        <span class="text-brand-blue font-bold">REPARO TODO</span>
+                    </div>
+                `;
+                galleryContainer.appendChild(card);
+            });
+        }
+
+        // Gallery Filters Click Listener
+        const filterBtns = document.querySelectorAll('#gallery-filters .filter-btn');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-brand-blue', 'text-white', 'active');
+                    b.classList.add('bg-slate-100', 'text-slate-700');
+                });
+                btn.classList.remove('bg-slate-100', 'text-slate-700');
+                btn.classList.add('bg-brand-blue', 'text-white', 'active');
+                
+                activeFilter = btn.getAttribute('data-filter');
+                renderGallery();
+            });
+        });
+
+        // Upload Modal Functionality
+        const uploadModal = document.getElementById('upload-modal');
+        const openUploadBtn = document.getElementById('open-upload-modal');
+        const closeUploadBtn = document.getElementById('close-upload-modal');
+        const cancelUploadBtn = document.getElementById('cancel-upload');
+        const uploadForm = document.getElementById('upload-form');
+        const imageUrlInput = document.getElementById('work-image-url');
+        const imageFileInput = document.getElementById('work-image-file');
+        const imagePreview = document.getElementById('image-preview');
+        const previewContainer = document.getElementById('image-preview-container');
+
+        let tempImageBase64 = '';
+
+        function openModal() {
+            uploadModal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            uploadModal.classList.add('hidden');
+            uploadForm.reset();
+            previewContainer.classList.add('hidden');
+            tempImageBase64 = '';
+        }
+
+        openUploadBtn.addEventListener('click', openModal);
+        closeUploadBtn.addEventListener('click', closeModal);
+        cancelUploadBtn.addEventListener('click', closeModal);
+
+        // Preview from URL
+        imageUrlInput.addEventListener('input', (e) => {
+            const url = e.target.value.trim();
+            if (url) {
+                imagePreview.src = url;
+                previewContainer.classList.remove('hidden');
+                tempImageBase64 = '';
+            } else if (!tempImageBase64) {
+                previewContainer.classList.add('hidden');
+            }
+        });
+
+        // Preview from Local File Upload
+        imageFileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    tempImageBase64 = evt.target.result;
+                    imagePreview.src = tempImageBase64;
+                    previewContainer.classList.remove('hidden');
+                    imageUrlInput.value = ''; // clear URL input if file uploaded
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Submit New Work
+        uploadForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const title = document.getElementById('work-title').value;
+            const categorySelect = document.getElementById('work-category');
+            const category = categorySelect.value;
+            const categoryName = categorySelect.options[categorySelect.selectedIndex].text;
+            const desc = document.getElementById('work-desc').value;
+            const location = document.getElementById('work-location').value || 'San Francisco - CBA';
+
+            let finalImage = tempImageBase64 || imageUrlInput.value.trim();
+
+            if (!finalImage) {
+                finalImage = 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=800&q=80';
+            }
+
+            const newWork = {
+                id: Date.now(),
+                title: title,
+                category: category,
+                categoryName: categoryName,
+                image: finalImage,
+                description: desc,
+                location: location
+            };
+
+            currentWorks.unshift(newWork);
+            saveWorks(currentWorks);
+            renderGallery();
+            closeModal();
+
+            showNotification("¡Trabajo Registrado!", "La imagen y datos del trabajo han sido incorporados a la galería exitosamente.");
+        });
+
+        // Contact Form Submission Mock
+        const contactForm = document.getElementById('contact-form');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            contactForm.reset();
+            showNotification("¡Consulta Enviada!", "Muchas gracias. Tu mensaje ha sido recibido por Rodrigo Araneda. Nos comunicaremos a la brevedad.");
+        });
+
+        // Notification Modal Helper
+        const notificationModal = document.getElementById('notification-modal');
+        const notifTitle = document.getElementById('notification-title');
+        const notifMsg = document.getElementById('notification-message');
+        const closeNotifBtn = document.getElementById('close-notification');
+
+        function showNotification(title, message) {
+            notifTitle.textContent = title;
+            notifMsg.textContent = message;
+            notificationModal.classList.remove('hidden');
+        }
+
+        closeNotifBtn.addEventListener('click', () => {
+            notificationModal.classList.add('hidden');
+        });
+
+        // Initialize Gallery on Page Load
+        window.addEventListener('DOMContentLoaded', () => {
+            renderGallery();
+        });
+    </script>
+</body>
+</html>
