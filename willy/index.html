@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guillermo Nagel - Servicios Generales | Arroyito, CBA</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        nagel: {
+                            red: '#D32F2F',
+                            redHover: '#B71C1C',
+                            dark: '#1E232A',
+                            accent: '#F59E0B',
+                            grayBg: '#F3F4F6'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .gradient-brand {
+            background: linear-gradient(135deg, #D32F2F 0%, #9A0007 100%);
+        }
+        .hero-pattern {
+            background-color: #1E232A;
+            background-image: radial-gradient(rgba(211, 47, 47, 0.25) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-40 bg-nagel-dark text-white shadow-lg border-b-2 border-nagel-red">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo & Brand Name -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="bg-nagel-red text-white p-2.5 rounded-xl font-black text-2xl tracking-wider shadow-md transform group-hover:scale-105 transition-transform flex items-center justify-center w-12 h-12">
+                        GN
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-xl sm:text-2xl font-black tracking-tight leading-none text-white">GUILLERMO NAGEL</span>
+                        <span class="text-xs font-semibold tracking-widest text-nagel-accent uppercase mt-1">Servicios Generales</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-6 text-sm font-semibold">
+                    <a href="#servicios" class="hover:text-nagel-accent transition-colors">Servicios</a>
+                    <a href="#presupuesto" class="hover:text-nagel-accent transition-colors">Solicitar Presupuesto</a>
+                    <a href="#galeria" class="hover:text-nagel-accent transition-colors">Trabajos Realizados</a>
+                    <a href="#nosotros" class="hover:text-nagel-accent transition-colors">Ubicación y Contacto</a>
+                </nav>
+
+                <!-- Header CTA Button -->
+                <div class="hidden sm:flex items-center gap-3">
+                    <a href="https://wa.me/5493576524479?text=Hola%20Guillermo,%20me%20gustaría%20solicitar%20un%20presupuesto" target="_blank" rel="noopener noreferrer" class="bg-green-600 hover:bg-green-700 text-white font-bold px-4 py-2.5 rounded-lg text-sm flex items-center gap-2 shadow-md transition-all transform hover:-translate-y-0.5">
+                        <i class="fa-brands fa-whatsapp text-lg"></i>
+                        <span>3576-524479</span>
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden text-gray-300 hover:text-white p-2 text-2xl focus:outline-none">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-nagel-dark border-t border-gray-700 px-4 pt-3 pb-6 space-y-3">
+            <a href="#servicios" class="block text-gray-200 hover:text-nagel-accent py-2 border-b border-gray-800">Servicios</a>
+            <a href="#presupuesto" class="block text-gray-200 hover:text-nagel-accent py-2 border-b border-gray-800">Solicitar Presupuesto</a>
+            <a href="#galeria" class="block text-gray-200 hover:text-nagel-accent py-2 border-b border-gray-800">Trabajos Realizados</a>
+            <a href="#nosotros" class="block text-gray-200 hover:text-nagel-accent py-2">Ubicación y Contacto</a>
+            <a href="https://wa.me/5493576524479?text=Hola%20Guillermo,%20me%20gustaría%20solicitar%20un%20presupuesto" target="_blank" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 mt-2">
+                <i class="fa-brands fa-whatsapp text-lg"></i>
+                <span>Enviar WhatsApp directo</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-pattern text-white py-16 lg:py-24 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 bg-nagel-red/20 border border-nagel-red/40 text-nagel-accent px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide">
+                        <i class="fa-solid fa-location-dot"></i> Arroyito, Córdoba y Zonas Aledañas
+                    </div>
+                    
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
+                        Soluciones Profesionales para tu Hogar y Negocio
+                    </h1>
+                    
+                    <p class="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto lg:mx-0 font-normal">
+                        Especialistas en Plomería, Pintura, Albañilería, Herrería y Electricidad. Trabajo garantizado con la máxima responsabilidad y rapidez.
+                    </p>
+
+                    <div class="pt-4 flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+                        <a href="#presupuesto" class="bg-nagel-red hover:bg-nagel-redHover text-white font-bold text-lg px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3">
+                            <i class="fa-solid fa-calculator"></i>
+                            <span>Pedir Presupuesto</span>
+                        </a>
+                        <a href="https://wa.me/5493576524479?text=Hola%20Guillermo,%20necesito%20hacer%20una%20consulta" target="_blank" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 font-semibold text-lg px-7 py-4 rounded-xl transition-all flex items-center justify-center gap-3 backdrop-blur-sm">
+                            <i class="fa-brands fa-whatsapp text-green-400 text-xl"></i>
+                            <span>Contactar por WhatsApp</span>
+                        </a>
+                    </div>
+
+                    <!-- Features badging -->
+                    <div class="pt-8 grid grid-cols-2 sm:grid-cols-3 gap-4 border-t border-gray-800 text-sm text-gray-300 font-medium">
+                        <div class="flex items-center justify-center lg:justify-start gap-2">
+                            <i class="fa-solid fa-circle-check text-nagel-red"></i>
+                            <span>Atención Rápida</span>
+                        </div>
+                        <div class="flex items-center justify-center lg:justify-start gap-2">
+                            <i class="fa-solid fa-circle-check text-nagel-red"></i>
+                            <span>Presupuesto Sin Cargo</span>
+                        </div>
+                        <div class="flex items-center justify-center lg:justify-start gap-2 col-span-2 sm:col-span-1">
+                            <i class="fa-solid fa-circle-check text-nagel-red"></i>
+                            <span>Trabajos en la Zona</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Banner / Card Representation -->
+                <div class="lg:col-span-5">
+                    <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-2xl text-gray-900 border-4 border-nagel-red relative transform rotate-1 hover:rotate-0 transition-transform">
+                        <div class="bg-nagel-red text-white p-4 rounded-xl text-center mb-6">
+                            <h2 class="text-2xl font-black uppercase tracking-wider">GUILLERMO NAGEL</h2>
+                            <p class="text-xs font-bold tracking-widest text-yellow-300">SERVICIOS GENERALES</p>
+                        </div>
+                        
+                        <div class="space-y-3 font-semibold text-gray-800">
+                            <div class="flex items-center justify-between p-2.5 bg-gray-50 rounded-lg border border-gray-100">
+                                <span class="flex items-center gap-3"><i class="fa-solid fa-faucet-drip text-blue-600 text-lg w-6"></i> Plomería</span>
+                                <i class="fa-solid fa-check text-green-600"></i>
+                            </div>
+                            <div class="flex items-center justify-between p-2.5 bg-gray-50 rounded-lg border border-gray-100">
+                                <span class="flex items-center gap-3"><i class="fa-solid fa-paint-roller text-purple-600 text-lg w-6"></i> Pintura</span>
+                                <i class="fa-solid fa-check text-green-600"></i>
+                            </div>
+                            <div class="flex items-center justify-between p-2.5 bg-gray-50 rounded-lg border border-gray-100">
+                                <span class="flex items-center gap-3"><i class="fa-solid fa-trowel-bricks text-orange-600 text-lg w-6"></i> Albañilería</span>
+                                <i class="fa-solid fa-check text-green-600"></i>
+                            </div>
+                            <div class="flex items-center justify-between p-2.5 bg-gray-50 rounded-lg border border-gray-100">
+                                <span class="flex items-center gap-3"><i class="fa-solid fa-hammer text-gray-700 text-lg w-6"></i> Herrería</span>
+                                <i class="fa-solid fa-check text-green-600"></i>
+                            </div>
+                            <div class="flex items-center justify-between p-2.5 bg-gray-50 rounded-lg border border-gray-100">
+                                <span class="flex items-center gap-3"><i class="fa-solid fa-bolt text-yellow-500 text-lg w-6"></i> Electricidad</span>
+                                <i class="fa-solid fa-check text-green-600"></i>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 pt-4 border-t border-gray-200 text-center">
+                            <p class="text-xs text-gray-500 uppercase font-bold tracking-wider">Teléfono Directo</p>
+                            <p class="text-2xl font-black text-nagel-red tracking-tight">3576-524479</p>
+                            <p class="text-xs text-gray-600 font-medium">ARROYITO - CBA</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="servicios" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-nagel-red font-bold uppercase tracking-wider text-sm">Especialistas Capacitados</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mt-2">Nuestros Servicios Generales</h2>
+                <p class="text-gray-600 mt-4 text-lg">Cubrimos una amplia gama de soluciones técnicas e instalaciones para mantener tu hogar, comercio u oficina en perfectas condiciones.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Service 1: Plomería -->
+                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-200 hover:border-nagel-red hover:shadow-xl transition-all group flex flex-col justify-between">
+                    <div>
+                        <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-faucet-drip"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-3">Plomería</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            Reparación e instalación de tuberías, griferías, desagües, termotanques, tanques de agua y filtraciones en general. Atendemos urgencias.
+                        </p>
+                    </div>
+                    <button onclick="solicitarServicioEspecifico('Plomería')" class="w-full bg-white hover:bg-nagel-red hover:text-white border border-gray-300 hover:border-nagel-red text-gray-800 font-bold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm">
+                        <i class="fa-brands fa-whatsapp text-green-500 group-hover:text-white text-lg"></i>
+                        <span>Pedir Presupuesto Plomería</span>
+                    </button>
+                </div>
+
+                <!-- Service 2: Pintura -->
+                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-200 hover:border-nagel-red hover:shadow-xl transition-all group flex flex-col justify-between">
+                    <div>
+                        <div class="w-16 h-16 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-paint-roller"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-3">Pintura</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            Pintura de interiores y exteriores, fachadas, impermeabilización de techos, tratamiento de humedad, revoque plástico e hidrolavados.
+                        </p>
+                    </div>
+                    <button onclick="solicitarServicioEspecifico('Pintura')" class="w-full bg-white hover:bg-nagel-red hover:text-white border border-gray-300 hover:border-nagel-red text-gray-800 font-bold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm">
+                        <i class="fa-brands fa-whatsapp text-green-500 group-hover:text-white text-lg"></i>
+                        <span>Pedir Presupuesto Pintura</span>
+                    </button>
+                </div>
+
+                <!-- Service 3: Albañilería -->
+                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-200 hover:border-nagel-red hover:shadow-xl transition-all group flex flex-col justify-between">
+                    <div>
+                        <div class="w-16 h-16 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-trowel-bricks"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-3">Albañilería</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            Construcción, refacciones, colocación de pisos y cerámicos, revoques, contrapisos, mampostería y reparaciones estructurales menores.
+                        </p>
+                    </div>
+                    <button onclick="solicitarServicioEspecifico('Albañilería')" class="w-full bg-white hover:bg-nagel-red hover:text-white border border-gray-300 hover:border-nagel-red text-gray-800 font-bold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm">
+                        <i class="fa-brands fa-whatsapp text-green-500 group-hover:text-white text-lg"></i>
+                        <span>Pedir Presupuesto Albañilería</span>
+                    </button>
+                </div>
+
+                <!-- Service 4: Herrería -->
+                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-200 hover:border-nagel-red hover:shadow-xl transition-all group flex flex-col justify-between">
+                    <div>
+                        <div class="w-16 h-16 bg-slate-200 text-slate-700 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-hammer"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-3">Herrería</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            Fabricación y reparación de portones, rejas, cerramientos, estructuras metálicas, soldaduras generales y mantenimiento metálico.
+                        </p>
+                    </div>
+                    <button onclick="solicitarServicioEspecifico('Herrería')" class="w-full bg-white hover:bg-nagel-red hover:text-white border border-gray-300 hover:border-nagel-red text-gray-800 font-bold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm">
+                        <i class="fa-brands fa-whatsapp text-green-500 group-hover:text-white text-lg"></i>
+                        <span>Pedir Presupuesto Herrería</span>
+                    </button>
+                </div>
+
+                <!-- Service 5: Electricidad -->
+                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-200 hover:border-nagel-red hover:shadow-xl transition-all group flex flex-col justify-between">
+                    <div>
+                        <div class="w-16 h-16 bg-yellow-100 text-yellow-600 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-3">Electricidad</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            Instalaciones eléctricas residenciales y comerciales, tableros, iluminación LED, cortocircuitos, tomacorrientes y térmica/disyuntor.
+                        </p>
+                    </div>
+                    <button onclick="solicitarServicioEspecifico('Electricidad')" class="w-full bg-white hover:bg-nagel-red hover:text-white border border-gray-300 hover:border-nagel-red text-gray-800 font-bold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm">
+                        <i class="fa-brands fa-whatsapp text-green-500 group-hover:text-white text-lg"></i>
+                        <span>Pedir Presupuesto Electricidad</span>
+                    </button>
+                </div>
+
+                <!-- Service Extra: Asesoría / Varios -->
+                <div class="bg-gradient-brand text-white rounded-2xl p-8 shadow-xl flex flex-col justify-between">
+                    <div>
+                        <div class="w-16 h-16 bg-white/20 text-white rounded-2xl flex items-center justify-center text-3xl mb-6">
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">¿Otro trabajo o consulta?</h3>
+                        <p class="text-red-100 mb-6 leading-relaxed">
+                            Realizamos mantenimiento integral para viviendas y locales. Consúltanos directamente por WhatsApp para coordinar una visita sin compromiso.
+                        </p>
+                    </div>
+                    <a href="https://wa.me/5493576524479?text=Hola%20Guillermo,%20tengo%20una%20consulta%20por%20un%20trabajo%20general" target="_blank" class="w-full bg-white hover:bg-gray-100 text-nagel-red font-extrabold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md">
+                        <i class="fa-brands fa-whatsapp text-xl text-green-600"></i>
+                        <span>Consultar Ahora</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Budget Form Generator Section -->
+    <section id="presupuesto" class="py-20 bg-gray-100 border-t border-b border-gray-200">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-200">
+                <div class="gradient-brand p-8 text-white text-center">
+                    <span class="bg-white/20 text-white text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Atención personalizada</span>
+                    <h2 class="text-3xl font-black mt-3">Solicitá tu Presupuesto por WhatsApp</h2>
+                    <p class="text-red-100 text-sm sm:text-base mt-2">Completá los datos a continuación y generaremos el mensaje formateado para enviar a Guillermo Nagel.</p>
+                </div>
+
+                <form id="presupuestoForm" onsubmit="enviarPresupuestoWhatsApp(event)" class="p-6 sm:p-10 space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Tu Nombre y Apellido *</label>
+                            <input type="text" id="nombreCliente" required placeholder="Ej. Juan Pérez" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-nagel-red focus:border-nagel-red outline-none transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Servicio Requerido *</label>
+                            <select id="servicioInteres" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-nagel-red focus:border-nagel-red outline-none transition-all bg-white">
+                                <option value="" disabled selected>Seleccioná un servicio...</option>
+                                <option value="Plomería">Plomería</option>
+                                <option value="Pintura">Pintura</option>
+                                <option value="Albañilería">Albañilería</option>
+                                <option value="Herrería">Herrería</option>
+                                <option value="Electricidad">Electricidad</option>
+                                <option value="Varios / Mantenimiento General">Varios / Mantenimiento General</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Teléfono de contacto *</label>
+                            <input type="tel" id="telefonoCliente" required placeholder="Ej. 3576 123456" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-nagel-red focus:border-nagel-red outline-none transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Ubicación / Localidad *</label>
+                            <input type="text" id="ubicacionCliente" required placeholder="Ej. Arroyito, Centro" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-nagel-red focus:border-nagel-red outline-none transition-all">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Descripción del trabajo a realizar *</label>
+                        <textarea id="descripcionTrabajo" rows="4" required placeholder="Detallá lo que necesitas (ej. Pintar frente de casa de 2 plantas, reparar pérdida en baño, etc.)" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-nagel-red focus:border-nagel-red outline-none transition-all"></textarea>
+                    </div>
+
+                    <div class="pt-2">
+                        <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-extrabold text-lg py-4 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-3">
+                            <i class="fa-brands fa-whatsapp text-2xl"></i>
+                            <span>Enviar Solicitud vía WhatsApp</span>
+                        </button>
+                    </div>
+                    <p class="text-xs text-center text-gray-500">Se abrirá la aplicación de WhatsApp con la información lista para enviar.</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Work Gallery Section -->
+    <section id="galeria" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <span class="text-nagel-red font-bold uppercase tracking-wider text-sm">Calidad Demostrada</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mt-2">Galería de Trabajos Realizados</h2>
+                    <p class="text-gray-600 mt-2">Explorá fotos de proyectos finalizados por nuestro equipo.</p>
+                </div>
+                <!-- Add new job button -->
+                <div class="mt-6 md:mt-0">
+                    <button onclick="abrirModalSubir()" class="bg-nagel-dark hover:bg-black text-white font-bold py-3 px-5 rounded-xl shadow transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-cloud-arrow-up text-nagel-accent"></i>
+                        <span>Cargar Nuevo Trabajo</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filter Categories -->
+            <div class="flex flex-wrap gap-2 mb-8" id="filtrosGaleria">
+                <button onclick="filtrarGaleria('Todos')" class="btn-filtro active bg-nagel-red text-white font-semibold px-4 py-2 rounded-lg text-sm transition-all">Todos</button>
+                <button onclick="filtrarGaleria('Plomería')" class="btn-filtro bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-4 py-2 rounded-lg text-sm transition-all">Plomería</button>
+                <button onclick="filtrarGaleria('Pintura')" class="btn-filtro bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-4 py-2 rounded-lg text-sm transition-all">Pintura</button>
+                <button onclick="filtrarGaleria('Albañilería')" class="btn-filtro bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-4 py-2 rounded-lg text-sm transition-all">Albañilería</button>
+                <button onclick="filtrarGaleria('Herrería')" class="btn-filtro bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-4 py-2 rounded-lg text-sm transition-all">Herrería</button>
+                <button onclick="filtrarGaleria('Electricidad')" class="btn-filtro bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-4 py-2 rounded-lg text-sm transition-all">Electricidad</button>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div id="contenedorGaleria" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Dynamic Content Load via JS -->
+            </div>
+            
+            <div id="sinResultados" class="hidden text-center py-12 text-gray-500">
+                <i class="fa-regular fa-image text-4xl mb-3"></i>
+                <p>No hay fotos registradas para esta categoría.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Upload Job -->
+    <div id="modalSubir" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="cerrarModalSubir()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h3 class="text-2xl font-bold text-gray-900 mb-2">Agregar Trabajo a la Galería</h3>
+            <p class="text-xs text-gray-500 mb-6">Podés subir una foto desde tu dispositivo o pegar la URL de una imagen.</p>
+
+            <form id="formNuevoTrabajo" onsubmit="guardarNuevoTrabajo(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-700 mb-1">Título / Descripción corta *</label>
+                    <input type="text" id="tituloTrabajo" required placeholder="Ej. Pintura de frente en vivienda residencial" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-nagel-red outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-700 mb-1">Categoría del Servicio *</label>
+                    <select id="categoriaTrabajo" required class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-nagel-red outline-none bg-white">
+                        <option value="Plomería">Plomería</option>
+                        <option value="Pintura">Pintura</option>
+                        <option value="Albañilería">Albañilería</option>
+                        <option value="Herrería">Herrería</option>
+                        <option value="Electricidad">Electricidad</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-700 mb-1">Seleccionar Imagen *</label>
+                    <div class="space-y-3">
+                        <input type="file" id="archivoImagen" accept="image/*" onchange="previewArchivoLocal(event)" class="block w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-nagel-red file:text-white hover:file:bg-nagel-redHover cursor-pointer border border-gray-200 rounded-lg p-1">
+                        
+                        <div class="text-center text-xs text-gray-400 font-bold">- Ó -</div>
+                        
+                        <input type="url" id="urlImagen" placeholder="https://ejemplo.com/foto.jpg" oninput="previewUrlImagen(event)" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-nagel-red outline-none">
+                    </div>
+                </div>
+
+                <!-- Preview Box -->
+                <div id="boxPreview" class="hidden mt-3 p-2 border border-gray-200 rounded-lg bg-gray-50 text-center">
+                    <p class="text-xs text-gray-500 mb-2 font-semibold">Vista previa:</p>
+                    <img id="imgPreview" src="" alt="Preview" class="max-h-40 mx-auto rounded-md object-cover shadow-sm">
+                </div>
+
+                <div class="pt-4 flex gap-3">
+                    <button type="button" onclick="cerrarModalSubir()" class="w-1/2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2.5 rounded-xl text-sm transition-all">Cancelar</button>
+                    <button type="submit" class="w-1/2 bg-nagel-red hover:bg-nagel-redHover text-white font-bold py-2.5 rounded-xl text-sm shadow transition-all">Guardar Foto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- About & Contact Section -->
+    <section id="nosotros" class="py-20 bg-nagel-dark text-white border-t-4 border-nagel-red">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                
+                <div>
+                    <span class="text-nagel-accent font-bold uppercase tracking-wider text-sm">Confianza y Trayectoria</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold mt-2">GUILLERMO NAGEL</h2>
+                    <p class="text-xl text-nagel-red font-semibold mb-6">Servicios Generales en Arroyito y la Región</p>
+
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        Brindamos respuestas integrales de mantenimiento, refacción y construcción. Con amplia experiencia en el rubro, nos enfocamos en cumplir los plazos estipulados y garantizar resultados duraderos con materiales de primera calidad.
+                    </p>
+
+                    <div class="space-y-4 font-medium">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-nagel-red/20 text-nagel-red flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-400">Teléfono / WhatsApp</p>
+                                <p class="text-lg font-bold">3576-524479</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-nagel-red/20 text-nagel-red flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-400">Ubicación</p>
+                                <p class="text-lg font-bold">Arroyito - Córdoba, Argentina</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-nagel-red/20 text-nagel-red flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-map-location-dot"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-400">Zona de Cobertura</p>
+                                <p class="text-lg font-bold">Arroyito y campos/localidades vecinas</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-800 p-8 rounded-3xl border border-gray-700 text-center space-y-6">
+                    <div class="inline-block p-4 bg-white rounded-2xl">
+                        <!-- QR Code representation matching flyier -->
+                        <div class="w-36 h-36 bg-gray-900 rounded-xl flex flex-col items-center justify-center text-white p-2">
+                            <i class="fa-solid fa-qrcode text-6xl text-nagel-accent mb-1"></i>
+                            <span class="text-[10px] font-bold tracking-wider">CONTACTO DIRECTO</span>
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-bold">¿Querés coordinar una visita?</h3>
+                    <p class="text-gray-300 text-sm max-w-sm mx-auto">
+                        Escribinos por WhatsApp con el detalle de lo que necesitas y te responderemos a la brevedad.
+                    </p>
+                    <a href="https://wa.me/5493576524479?text=Hola%20Guillermo,%20quisiera%20coordinar%20una%20visita%20para%20un%20presupuesto" target="_blank" class="inline-flex items-center gap-3 bg-green-600 hover:bg-green-700 text-white font-black text-lg px-8 py-4 rounded-xl shadow-lg transition-all">
+                        <i class="fa-brands fa-whatsapp text-2xl"></i>
+                        <span>Contactar por WhatsApp</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-gray-400 py-8 text-center text-sm border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="font-semibold text-gray-300">GUILLERMO NAGEL - SERVICIOS GENERALES</p>
+            <p class="mt-1 text-xs text-gray-500">Plomería • Pintura • Albañilería • Herrería • Electricidad</p>
+            <p class="mt-4 text-xs">Arroyito, Córdoba, Argentina. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/5493576524479?text=Hola%20Guillermo,%20me%20comunico%20desde%20la%20p%C3%A1gina%20web" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white w-16 h-16 rounded-full shadow-2xl flex items-center justify-center text-3xl transition-transform transform hover:scale-110 active:scale-95 border-2 border-white">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- JavaScript logic -->
+    <script>
+        // Default Sample Images for initial load
+        const TRABAJOS_MUESTRA = [
+            {
+                id: '1',
+                titulo: 'Instalación y renovación de cañerías de agua',
+                categoria: 'Plomería',
+                imagen: 'https://images.unsplash.com/photo-1585704032915-c3400ca199e7?auto=format&fit=crop&w=600&q=80'
+            },
+            {
+                id: '2',
+                titulo: 'Pintura completa de exterior y fachada',
+                categoria: 'Pintura',
+                imagen: 'https://images.unsplash.com/photo-1562259949-e8e7689d7828?auto=format&fit=crop&w=600&q=80'
+            },
+            {
+                id: '3',
+                titulo: 'Colocación de cerámicos y revestimiento',
+                categoria: 'Albañilería',
+                imagen: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80'
+            },
+            {
+                id: '4',
+                titulo: 'Portón automatizado de herrería estructural',
+                categoria: 'Herrería',
+                imagen: 'https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=600&q=80'
+            },
+            {
+                id: '5',
+                titulo: 'Instalación de tablero eléctrico y térmicas',
+                categoria: 'Electricidad',
+                imagen: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80'
+            }
+        ];
+
+        let trabajos = [];
+        let categoriaActual = 'Todos';
+        let previewImageData = '';
+
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Initialize localStorage & render
+        window.addEventListener('DOMContentLoaded', () => {
+            const guardados = localStorage.getItem('nagel_trabajos');
+            if (guardados) {
+                try {
+                    trabajos = JSON.parse(guardados);
+                } catch (e) {
+                    trabajos = TRABAJOS_MUESTRA;
+                }
+            } else {
+                trabajos = TRABAJOS_MUESTRA;
+                localStorage.setItem('nagel_trabajos', JSON.stringify(trabajos));
+            }
+            renderizarGaleria();
+        });
+
+        // Render gallery
+        function renderizarGaleria() {
+            const contenedor = document.getElementById('contenedorGaleria');
+            const sinResultados = document.getElementById('sinResultados');
+            contenedor.innerHTML = '';
+
+            const filtrados = categoriaActual === 'Todos' 
+                ? trabajos 
+                : trabajos.filter(t => t.categoria === categoriaActual);
+
+            if (filtrados.length === 0) {
+                sinResultados.classList.remove('hidden');
+            } else {
+                sinResultados.classList.add('hidden');
+                filtrados.forEach(trabajo => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-gray-50 rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-lg transition-all flex flex-col group';
+                    card.innerHTML = `
+                        <div class="relative h-56 bg-gray-200 overflow-hidden">
+                            <img src="${trabajo.imagen}" alt="${trabajo.titulo}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://placehold.co/600x400/1E232A/FFF?text=Foto+Servicio'">
+                            <span class="absolute top-3 left-3 bg-nagel-red text-white text-xs font-bold px-3 py-1 rounded-full shadow">
+                                ${trabajo.categoria}
+                            </span>
+                        </div>
+                        <div class="p-5 flex-1 flex flex-col justify-between">
+                            <h4 class="font-bold text-gray-900 text-base mb-2">${trabajo.titulo}</h4>
+                            <div class="pt-3 border-t border-gray-200 flex justify-between items-center text-xs text-gray-500">
+                                <span><i class="fa-solid fa-location-dot text-nagel-red mr-1"></i> Arroyito y zona</span>
+                                <button onclick="solicitarTrabajoSimilar('${trabajo.categoria}', '${trabajo.titulo}')" class="text-nagel-red font-bold hover:underline flex items-center gap-1">
+                                    <i class="fa-brands fa-whatsapp text-green-600"></i> Cotizar similar
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    contenedor.appendChild(card);
+                });
+            }
+        }
+
+        // Filter selection
+        function filtrarGaleria(categoria) {
+            categoriaActual = categoria;
+            const botones = document.querySelectorAll('.btn-filtro');
+            botones.forEach(btn => {
+                if (btn.innerText.trim() === categoria) {
+                    btn.className = 'btn-filtro active bg-nagel-red text-white font-semibold px-4 py-2 rounded-lg text-sm transition-all';
+                } else {
+                    btn.className = 'btn-filtro bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-4 py-2 rounded-lg text-sm transition-all';
+                }
+            });
+            renderizarGaleria();
+        }
+
+        // Service specific quote button
+        function solicitarServicioEspecifico(servicio) {
+            document.getElementById('servicioInteres').value = servicio;
+            document.getElementById('presupuesto').scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('nombreCliente').focus();
+        }
+
+        // Quote similar job
+        function solicitarTrabajoSimilar(categoria, titulo) {
+            document.getElementById('servicioInteres').value = categoria;
+            document.getElementById('descripcionTrabajo').value = `Hola Guillermo, vi en la web el trabajo "${titulo}" y me gustaría pedir un presupuesto similar para mi domicilio.`;
+            document.getElementById('presupuesto').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Submit budget form to WhatsApp
+        function enviarPresupuestoWhatsApp(e) {
+            e.preventDefault();
+            const nombre = document.getElementById('nombreCliente').value.trim();
+            const servicio = document.getElementById('servicioInteres').value;
+            const telefono = document.getElementById('telefonoCliente').value.trim();
+            const ubicacion = document.getElementById('ubicacionCliente').value.trim();
+            const descripcion = document.getElementById('descripcionTrabajo').value.trim();
+
+            const mensaje = `*SOLICITUD DE PRESUPUESTO - WEB*%0A%0A` +
+                `*Cliente:* ${encodeURIComponent(nombre)}%0A` +
+                `*Servicio:* ${encodeURIComponent(servicio)}%0A` +
+                `*Teléfono:* ${encodeURIComponent(telefono)}%0A` +
+                `*Ubicación:* ${encodeURIComponent(ubicacion)}%0A` +
+                `*Detalle:* ${encodeURIComponent(descripcion)}`;
+
+            const url = `https://wa.me/5493576524479?text=${mensaje}`;
+            window.open(url, '_blank');
+        }
+
+        // Modal controls
+        function abrirModalSubir() {
+            document.getElementById('modalSubir').classList.remove('hidden');
+        }
+
+        function cerrarModalSubir() {
+            document.getElementById('modalSubir').classList.add('hidden');
+            document.getElementById('formNuevoTrabajo').reset();
+            document.getElementById('boxPreview').classList.add('hidden');
+            previewImageData = '';
+        }
+
+        // Image Preview logic
+        function previewArchivoLocal(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    previewImageData = event.target.result;
+                    mostrarPreview(previewImageData);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function previewUrlImagen(e) {
+            const url = e.target.value.trim();
+            if (url) {
+                previewImageData = url;
+                mostrarPreview(previewImageData);
+            }
+        }
+
+        function mostrarPreview(src) {
+            const box = document.getElementById('boxPreview');
+            const img = document.getElementById('imgPreview');
+            img.src = src;
+            box.classList.remove('hidden');
+        }
+
+        // Save new job
+        function guardarNuevoTrabajo(e) {
+            e.preventDefault();
+            const titulo = document.getElementById('tituloTrabajo').value.trim();
+            const categoria = document.getElementById('categoriaTrabajo').value;
+
+            if (!previewImageData) {
+                alert('Por favor selecciona un archivo de imagen o ingresa una URL válida.');
+                return;
+            }
+
+            const nuevoTrabajo = {
+                id: Date.now().toString(),
+                titulo,
+                categoria,
+                imagen: previewImageData
+            };
+
+            trabajos.unshift(nuevoTrabajo);
+            localStorage.setItem('nagel_trabajos', JSON.stringify(trabajos));
+            
+            cerrarModalSubir();
+            filtrarGaleria('Todos');
+
+            // Scroll to gallery
+            document.getElementById('galeria').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
