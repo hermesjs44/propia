@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lavadero El Colo - Reserva de Turnos Online</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#E53E3E',
+                            orange: '#DD6B20',
+                            blue: '#00A3C4',
+                            dark: '#1A202C',
+                            darker: '#111827',
+                            lightBg: '#F7FAFC'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        .custom-gradient {
+            background: linear-gradient(135deg, #1A202C 0%, #111827 50%, #003249 100%);
+        }
+        .text-gradient-colo {
+            background: linear-gradient(to right, #FF5722, #FF9800);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased flex flex-col min-h-screen">
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="sticky top-0 z-40 bg-gray-900/95 text-white backdrop-blur border-b border-gray-800 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-orange-600 via-red-500 to-amber-400 flex items-center justify-center shadow-lg shadow-orange-500/30 transform group-hover:scale-105 transition-transform duration-300">
+                    <i class="fa-solid fa-car-wash text-white text-2xl"></i>
+                </div>
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-widest text-cyan-400">Lavadero</span>
+                    <h1 class="text-2xl font-black tracking-tight text-white flex items-center gap-1">
+                        EL COLO <span class="w-2 h-2 rounded-full bg-orange-500 inline-block animate-ping"></span>
+                    </h1>
+                </div>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center gap-8 font-medium text-sm">
+                <a href="#inicio" class="hover:text-orange-400 transition-colors">Inicio</a>
+                <a href="#servicios" class="hover:text-orange-400 transition-colors">Servicios</a>
+                <a href="#turnos" class="hover:text-orange-400 transition-colors">Pedir Turno</a>
+                <a href="#mis-turnos" class="hover:text-orange-400 transition-colors flex items-center gap-2">
+                    <span>Mis Turnos</span>
+                    <span id="nav-badge" class="bg-cyan-500 text-gray-900 text-xs font-bold px-2 py-0.5 rounded-full hidden">0</span>
+                </a>
+                <a href="#contacto" class="hover:text-orange-400 transition-colors">Contacto</a>
+            </nav>
+
+            <!-- CTA Header Button -->
+            <div class="hidden sm:block">
+                <a href="#turnos" class="bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-2.5 px-5 rounded-xl shadow-lg shadow-orange-500/25 transition-all transform hover:-translate-y-0.5 flex items-center gap-2 text-sm">
+                    <i class="fa-regular fa-calendar-check text-lg"></i>
+                    <span>Reservar Ahora</span>
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-300 hover:text-white focus:outline-none" aria-label="Abrir Menú">
+                <i class="fa-solid fa-bars text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Container -->
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-900 border-b border-gray-800 px-4 pt-2 pb-6 space-y-3">
+            <a href="#inicio" class="block py-2 text-gray-300 hover:text-orange-400 font-medium">Inicio</a>
+            <a href="#servicios" class="block py-2 text-gray-300 hover:text-orange-400 font-medium">Servicios</a>
+            <a href="#turnos" class="block py-2 text-gray-300 hover:text-orange-400 font-medium">Pedir Turno</a>
+            <a href="#mis-turnos" class="block py-2 text-gray-300 hover:text-orange-400 font-medium flex items-center justify-between">
+                <span>Mis Turnos</span>
+                <span id="nav-badge-mobile" class="bg-cyan-500 text-gray-900 text-xs font-bold px-2 py-0.5 rounded-full hidden">0</span>
+            </a>
+            <a href="#contacto" class="block py-2 text-gray-300 hover:text-orange-400 font-medium">Contacto</a>
+            <a href="#turnos" class="block w-full text-center bg-gradient-to-r from-orange-500 to-red-600 text-white font-bold py-3 rounded-xl shadow-lg shadow-orange-500/25 mt-4">
+                Reservar Ahora
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- HERO SECTION -->
+        <section id="inicio" class="relative custom-gradient text-white overflow-hidden py-16 lg:py-24">
+            <!-- Background Decorative Bubbles/Glow -->
+            <div class="absolute top-10 left-10 w-72 h-72 bg-orange-500/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute bottom-10 right-10 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <!-- Hero Content -->
+                    <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                        <div class="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/30 text-orange-400 text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full">
+                            <i class="fa-solid fa-sparkles text-amber-400"></i>
+                            <span>Atención personalizada y máximo detalle</span>
+                        </div>
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-none">
+                            Tu vehículo impecable con la calidad de <span class="text-gradient-colo">El Colo</span>
+                        </h1>
+                        <p class="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto lg:mx-0 font-light leading-relaxed">
+                            Agendá tu turno online en segundos. Lavados detallados, tratamientos acrílicos, limpieza profunda de tapizados e interiores con productos premium.
+                        </p>
+                        
+                        <!-- CTA Buttons -->
+                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                            <a href="#turnos" class="w-full sm:w-auto text-center bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-4 px-8 rounded-2xl shadow-xl shadow-orange-500/30 transition-all transform hover:-translate-y-1 text-base flex items-center justify-center gap-3">
+                                <i class="fa-solid fa-calendar-days text-xl"></i>
+                                <span>Sacar Turno Ahora</span>
+                            </a>
+                            <a href="#servicios" class="w-full sm:w-auto text-center bg-gray-800/80 hover:bg-gray-800 border border-gray-700 text-gray-200 font-semibold py-4 px-8 rounded-2xl transition-all flex items-center justify-center gap-2 text-base">
+                                <span>Ver Precios y Servicios</span>
+                                <i class="fa-solid fa-arrow-down text-sm"></i>
+                            </a>
+                        </div>
+
+                        <!-- Highlights Bar -->
+                        <div class="grid grid-cols-3 gap-4 pt-8 border-t border-gray-800 text-center lg:text-left">
+                            <div>
+                                <p class="text-2xl font-extrabold text-cyan-400">100%</p>
+                                <p class="text-xs text-gray-400 font-medium">Garantía de Calidad</p>
+                            </div>
+                            <div>
+                                <p class="text-2xl font-extrabold text-orange-400">3+ años</p>
+                                <p class="text-xs text-gray-400 font-medium">De Experiencia</p>
+                            </div>
+                            <div>
+                                <p class="text-2xl font-extrabold text-amber-400">Rápido</p>
+                                <p class="text-xs text-gray-400 font-medium">Sin demoras ni esperas</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hero Visual / Feature Card -->
+                    <div class="lg:col-span-5 relative">
+                        <div class="relative mx-auto max-w-md lg:max-w-none bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 rounded-3xl p-6 sm:p-8 shadow-2xl">
+                            <div class="absolute -top-4 -right-4 bg-orange-500 text-white font-black text-xs uppercase px-3 py-1 rounded-full shadow-lg">
+                                ¡Turnos Disponibles Hoy!
+                            </div>
+                            
+                            <div class="space-y-6">
+                                <div class="flex items-center gap-4 border-b border-gray-800 pb-4">
+                                    <div class="w-14 h-14 bg-cyan-500/10 text-cyan-400 rounded-2xl flex items-center justify-center text-2xl font-bold">
+                                        <i class="fa-solid fa-soap"></i>
+                                    </div>
+                                    <div>
+                                        <h2 class="text-lg font-bold text-white">¿Por qué elegir a El Colo?</h2>
+                                        <p class="text-xs text-gray-400">Cuidado especializado para cada tipo de motor</p>
+                                    </div>
+                                </div>
+
+                                <ul class="space-y-3 text-sm text-gray-300">
+                                    <li class="flex items-center gap-3">
+                                        <i class="fa-solid fa-circle-check text-orange-400"></i>
+                                        <span>Productos de PH neutro y alta protección.</span>
+                                    </li>
+                                    <li class="flex items-center gap-3">
+                                        <i class="fa-solid fa-circle-check text-orange-400"></i>
+                                        <span>Lavado de chasis y motor con precaución.</span>
+                                    </li>
+                                    <li class="flex items-center gap-3">
+                                        <i class="fa-solid fa-circle-check text-orange-400"></i>
+                                        <span>Secado con microfibras ultra absorbentes (no raya).</span>
+                                    </li>
+                                    <li class="flex items-center gap-3">
+                                        <i class="fa-solid fa-circle-check text-orange-400"></i>
+                                        <span>Aroma y terminación de salón de exposición.</span>
+                                    </li>
+                                </ul>
+
+                                <div class="bg-gray-800/80 p-4 rounded-xl border border-gray-700/60 flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                                        <span class="text-xs text-gray-300 font-medium">Abierto ahora</span>
+                                    </div>
+                                    <span class="text-xs font-semibold text-orange-400">Lun a Sáb: 8:00 - 19:00 hs</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES & PRICING SECTION -->
+        <section id="servicios" class="py-16 sm:py-24 bg-slate-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-orange-600 font-bold text-xs sm:text-sm uppercase tracking-widest bg-orange-100 px-3 py-1 rounded-full">Nuestras Soluciones</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mt-3 tracking-tight">Servicios y Tarifas</h2>
+                    <p class="text-gray-600 mt-4 text-base sm:text-lg">
+                        Elegí el plan perfecto para las necesidades de tu vehículo. Precios transparentes sin sorpresas.
+                    </p>
+                </div>
+
+                <!-- Services Grid -->
+                <div id="services-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Dynamic rendering in JavaScript JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- APPOINTMENT BOOKING SECTION -->
+        <section id="turnos" class="py-16 sm:py-24 bg-gray-900 text-white relative">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span class="text-cyan-400 font-bold text-xs sm:text-sm uppercase tracking-widest bg-cyan-900/40 px-3 py-1 rounded-full border border-cyan-800">Reserva Fácil</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-3">Solicitá tu Turno Online</h2>
+                    <p class="text-gray-400 mt-2 text-sm sm:text-base">
+                        Completá los pasos para asegurar el lugar de tu vehículo en la agenda de El Colo.
+                    </p>
+                </div>
+
+                <!-- BOOKING WIZARD CONTAINER -->
+                <div class="bg-gray-800/90 border border-gray-700/80 rounded-3xl p-6 sm:p-10 shadow-2xl backdrop-blur">
+                    <form id="booking-form" onsubmit="handleBookingSubmit(event)">
+                        
+                        <!-- STEP 1: VEHICLE & SERVICE SELECTION -->
+                        <div class="space-y-8">
+                            <div class="border-b border-gray-700 pb-4">
+                                <h3 class="text-lg font-bold text-orange-400 flex items-center gap-2">
+                                    <span class="w-7 h-7 rounded-full bg-orange-500/20 text-orange-400 flex items-center justify-center text-xs">1</span>
+                                    <span>Vehículo y Servicio</span>
+                                </h3>
+                            </div>
+
+                            <!-- Vehicle Category Picker -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-300 mb-3">1. Seleccioná el Tipo de Vehículo:</label>
+                                <div class="grid grid-cols-3 gap-3 sm:gap-4" id="vehicle-selector">
+                                    <button type="button" onclick="selectVehicle('auto')" id="v-auto" class="vehicle-btn active border-2 border-orange-500 bg-orange-500/10 text-white rounded-2xl p-3 sm:p-4 text-center transition-all flex flex-col items-center justify-center gap-2">
+                                        <i class="fa-solid fa-car text-2xl text-orange-400"></i>
+                                        <span class="font-bold text-xs sm:text-sm">Auto</span>
+                                        <span class="text-[10px] text-gray-400">Tarifa Estándar</span>
+                                    </button>
+
+                                    <button type="button" onclick="selectVehicle('suv')" id="v-suv" class="vehicle-btn border-2 border-gray-700 bg-gray-800/50 text-gray-400 hover:border-gray-600 rounded-2xl p-3 sm:p-4 text-center transition-all flex flex-col items-center justify-center gap-2">
+                                        <i class="fa-solid fa-truck-pickup text-2xl"></i>
+                                        <span class="font-bold text-xs sm:text-sm">Camioneta / SUV</span>
+                                        <span class="text-[10px] text-gray-400">+25% Adicional</span>
+                                    </button>
+
+                                    <button type="button" onclick="selectVehicle('moto')" id="v-moto" class="vehicle-btn border-2 border-gray-700 bg-gray-800/50 text-gray-400 hover:border-gray-600 rounded-2xl p-3 sm:p-4 text-center transition-all flex flex-col items-center justify-center gap-2">
+                                        <i class="fa-solid fa-motorcycle text-2xl"></i>
+                                        <span class="font-bold text-xs sm:text-sm">Moto</span>
+                                        <span class="text-[10px] text-gray-400">-30% Descuento</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Service Selection Card List -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-300 mb-3">2. Seleccioná el Servicio Deseado:</label>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="service-options">
+                                    <!-- Rendered dynamically -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- STEP 2: DATE & TIME SELECTOR -->
+                        <div class="space-y-6 mt-10">
+                            <div class="border-b border-gray-700 pb-4">
+                                <h3 class="text-lg font-bold text-cyan-400 flex items-center gap-2">
+                                    <span class="w-7 h-7 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xs">2</span>
+                                    <span>Fecha y Horario</span>
+                                </h3>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <!-- Date Picker -->
+                                <div>
+                                    <label for="booking-date" class="block text-xs font-semibold text-gray-300 mb-2 uppercase tracking-wider">Fecha del Turno</label>
+                                    <input type="date" id="booking-date" required onchange="generateTimeSlots()" class="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500 transition-colors">
+                                </div>
+
+                                <!-- Time Slot Selector -->
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-300 mb-2 uppercase tracking-wider">Horarios Disponibles</label>
+                                    <div id="time-slots-container" class="grid grid-cols-3 gap-2 max-h-48 overflow-y-auto pr-1 custom-scrollbar">
+                                        <!-- Time slots dynamically generated -->
+                                    </div>
+                                    <input type="hidden" id="selected-time" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- STEP 3: CUSTOMER DATA -->
+                        <div class="space-y-6 mt-10">
+                            <div class="border-b border-gray-700 pb-4">
+                                <h3 class="text-lg font-bold text-amber-400 flex items-center gap-2">
+                                    <span class="w-7 h-7 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs">3</span>
+                                    <span>Datos del Cliente y Vehículo</span>
+                                </h3>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <div>
+                                    <label for="client-name" class="block text-xs font-semibold text-gray-300 mb-1">Nombre Completo *</label>
+                                    <input type="text" id="client-name" required placeholder="Ej: Juan Pérez" class="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500">
+                                </div>
+                                <div>
+                                    <label for="client-phone" class="block text-xs font-semibold text-gray-300 mb-1">Teléfono / WhatsApp *</label>
+                                    <input type="tel" id="client-phone" required placeholder="Ej: 11 1234 5678" class="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500">
+                                </div>
+                                <div>
+                                    <label for="client-plate" class="block text-xs font-semibold text-gray-300 mb-1">Patente / Dominio *</label>
+                                    <input type="text" id="client-plate" required placeholder="Ej: AA 123 CD" class="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500 uppercase">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SUMMARY & SUBMIT -->
+                        <div class="mt-10 p-6 bg-gray-900/80 rounded-2xl border border-gray-700 flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div>
+                                <span class="text-xs uppercase font-bold text-gray-400 tracking-wider">Resumen Estimado</span>
+                                <div class="flex items-baseline gap-2 mt-1">
+                                    <span class="text-xs text-gray-400">Total:</span>
+                                    <span id="summary-price" class="text-3xl font-black text-orange-400">$0</span>
+                                </div>
+                                <p id="summary-details" class="text-xs text-gray-400 mt-1">Selecciona un servicio para continuar</p>
+                            </div>
+
+                            <button type="submit" id="submit-btn" class="w-full md:w-auto bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-extrabold text-lg py-4 px-8 rounded-xl shadow-lg shadow-orange-500/30 transition-all flex items-center justify-center gap-3">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <span>Confirmar Reserva</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- MY BOOKINGS / LOCAL STORAGE SECTION -->
+        <section id="mis-turnos" class="py-16 sm:py-24 bg-slate-100 border-t border-slate-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
+                    <div>
+                        <span class="text-cyan-600 font-bold text-xs uppercase tracking-widest bg-cyan-100 px-3 py-1 rounded-full">Gestión Personal</span>
+                        <h2 class="text-3xl font-extrabold text-gray-900 mt-2">Mis Turnos Reservados</h2>
+                        <p class="text-sm text-gray-600 mt-1">Aquí podés consultar y administrar las reservas guardadas en este navegador.</p>
+                    </div>
+                    <button onclick="clearAllBookings()" id="btn-clear-all" class="hidden self-start md:self-auto text-xs font-semibold text-red-600 hover:text-red-800 bg-red-100 hover:bg-red-200 px-4 py-2 rounded-xl transition-colors">
+                        <i class="fa-solid fa-trash-can mr-1"></i> Borrar Historial
+                    </button>
+                </div>
+
+                <!-- Bookings List Container -->
+                <div id="my-bookings-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Dynamic rendering in JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT & LOCATION SECTION -->
+        <section id="contacto" class="py-16 sm:py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Info Column -->
+                    <div class="lg:col-span-5 space-y-8">
+                        <div>
+                            <span class="text-orange-600 font-bold text-xs uppercase tracking-widest bg-orange-100 px-3 py-1 rounded-full">Encontranos</span>
+                            <h2 class="text-3xl font-extrabold text-gray-900 mt-3">Ubicación y Contacto</h2>
+                            <p class="text-gray-600 mt-3 text-sm leading-relaxed">
+                                Traé tu vehículo al taller de "El Colo". Garantizamos un trato cercano, puntualidad y los mejores resultados.
+                            </p>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                                <div class="w-10 h-10 rounded-xl bg-orange-500/10 text-orange-600 flex items-center justify-center flex-shrink-0 text-lg">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-gray-900 text-sm">Dirección</h3>
+                                    <p class="text-sm text-gray-600">Av. Principal 1450, San Francisco, Córdoba</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                                <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-600 flex items-center justify-center flex-shrink-0 text-lg">
+                                    <i class="fa-solid fa-clock"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-gray-900 text-sm">Horarios de Atención</h3>
+                                    <p class="text-sm text-gray-600">Lunes a Sábado: 08:00 - 19:00 hs</p>
+                                    <p class="text-xs text-gray-400 mt-0.5">Domingos y Feriados: Cerrado</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                                <div class="w-10 h-10 rounded-xl bg-green-500/10 text-green-600 flex items-center justify-center flex-shrink-0 text-lg">
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-gray-900 text-sm">WhatsApp Directo</h3>
+                                    <p class="text-sm text-gray-600">+54 9 3564 12-3456</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Social Icons -->
+                        <div class="pt-2 flex items-center gap-4">
+                            <a href="#" class="w-10 h-10 rounded-xl bg-gray-100 hover:bg-orange-500 hover:text-white text-gray-600 flex items-center justify-center transition-all">
+                                <i class="fa-brands fa-instagram text-lg"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-xl bg-gray-100 hover:bg-orange-500 hover:text-white text-gray-600 flex items-center justify-center transition-all">
+                                <i class="fa-brands fa-facebook-f text-lg"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-xl bg-gray-100 hover:bg-orange-500 hover:text-white text-gray-600 flex items-center justify-center transition-all">
+                                <i class="fa-brands fa-tiktok text-lg"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Mock Map -->
+                    <div class="lg:col-span-7">
+                        <div class="bg-gray-900 rounded-3xl p-4 shadow-xl border border-gray-800 relative overflow-hidden h-80 sm:h-96 flex flex-col justify-between">
+                            <!-- Simulated Map Graphic -->
+                            <div class="absolute inset-0 opacity-40 bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                            
+                            <div class="relative z-10 flex justify-between items-start p-2">
+                                <span class="bg-gray-800/90 text-xs font-semibold text-gray-300 px-3 py-1.5 rounded-xl border border-gray-700 shadow">
+                                    <i class="fa-solid fa-map-pin text-orange-500 mr-1"></i> Lavadero El Colo - Zona San Francisco
+                                </span>
+                            </div>
+
+                            <!-- Map Center Pin Graphic -->
+                            <div class="relative z-10 flex flex-col items-center justify-center my-auto">
+                                <div class="w-16 h-16 bg-orange-500/20 rounded-full animate-ping absolute"></div>
+                                <div class="w-12 h-12 bg-gradient-to-tr from-orange-600 to-amber-500 text-white rounded-2xl shadow-2xl flex items-center justify-center text-2xl z-10">
+                                    <i class="fa-solid fa-car-wash"></i>
+                                </div>
+                                <div class="bg-gray-900 text-white font-bold text-xs px-3 py-1 rounded-full shadow border border-gray-700 mt-2 z-10">
+                                    ¡Estamos Aquí!
+                                </div>
+                            </div>
+
+                            <div class="relative z-10 flex justify-end">
+                                <a href="https://maps.google.com" target="_blank" class="bg-white hover:bg-gray-100 text-gray-900 font-bold text-xs px-4 py-2 rounded-xl shadow transition-colors flex items-center gap-2">
+                                    <span>Abrir en Google Maps</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-950 text-gray-400 py-12 border-t border-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left flex flex-col sm:flex-row justify-between items-center gap-6">
+            <div>
+                <p class="text-white font-bold text-lg">Lavadero El Colo</p>
+                <p class="text-xs text-gray-500 mt-1">© 2026 Todos los derechos reservados. Estética y Lavado Vehicular.</p>
+            </div>
+            <div class="flex items-center gap-6 text-xs text-gray-400">
+                <a href="#inicio" class="hover:text-white transition-colors">Inicio</a>
+                <a href="#servicios" class="hover:text-white transition-colors">Servicios</a>
+                <a href="#turnos" class="hover:text-white transition-colors">Pedir Turno</a>
+                <a href="#contacto" class="hover:text-white transition-colors">Contacto</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SUCCESS MODAL -->
+    <div id="success-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden transition-opacity duration-300 opacity-0">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 text-center shadow-2xl transform transition-transform duration-300 scale-95" id="modal-card">
+            <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto text-3xl mb-4">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            
+            <h3 class="text-2xl font-black text-gray-900">¡Turno Reservado!</h3>
+            <p class="text-sm text-gray-600 mt-2">
+                Tu turno ha sido agendado exitosamente en el sistema de <span class="font-bold text-orange-600">El Colo</span>.
+            </p>
+
+            <div id="modal-summary" class="my-6 p-4 bg-slate-50 rounded-2xl text-left border border-slate-100 text-xs space-y-2 text-gray-700">
+                <!-- Dynamic Summary Info -->
+            </div>
+
+            <div class="space-y-3">
+                <button id="btn-whatsapp-send" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-green-500/25 transition-all flex items-center justify-center gap-2 text-sm">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    <span>Enviar Confirmación por WhatsApp</span>
+                </button>
+                <button onclick="closeModal()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-3 px-4 rounded-xl transition-colors text-sm">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // DATA: SERVICES DEFINITION
+        const SERVICES = [
+            {
+                id: 'simple',
+                title: 'Lavado Simple',
+                icon: 'fa-droplet',
+                badge: 'Rápido',
+                badgeColor: 'bg-blue-100 text-blue-700',
+                price: 20000,
+                time: '45 min',
+                description: 'Lavado de carrocería con champú PH neutro, secado con microfibra, aspirado express e hidratación de neumáticos.',
+                items: ['Carrocería exterior', 'Aspirado rápido de alfombras', 'Silicona para neumáticos']
+            },
+            {
+                id: 'completo',
+                title: 'Completo + Cera',
+                icon: 'fa-sparkles',
+                badge: 'Más Popular',
+                badgeColor: 'bg-orange-100 text-orange-700',
+                price: 30000,
+                time: '1h 20 min',
+                description: 'Lavado profundo de chasis, aspirado minucioso de habitáculo y baúl, más encerado líquido de alto brillo.',
+                items: ['Lavado exterior e interior', 'Encerado protector de alto brillo', 'Acondicionamiento de plásticos']
+            },
+            {
+                id: 'tapizados',
+                title: 'Limpieza de Tapizados',
+                icon: 'fa-couch',
+                badge: 'Profundo',
+                badgeColor: 'bg-purple-100 text-purple-700',
+                price: 40000,
+                time: '3 horas',
+                description: 'Lavado con inyección y extracción para asientos, paneles de puerta, alfombras y techo. Desinfección completa.',
+                items: ['Eliminación de manchas y olores', 'Desinfección con vapor/químico', 'Secado rápido asistido']
+            },
+            {
+                id: 'acrilico',
+                title: 'Tratamiento Acrílico',
+                icon: 'fa-gem',
+                badge: 'Premium',
+                badgeColor: 'bg-amber-100 text-amber-700',
+                price: 50000,
+                time: '4 a 5 horas',
+                description: 'Corrección leve de barniz, descontaminado de pintura y sellado acrílico para máxima protección UV y brillo espejo.',
+                items: ['Descontaminado de pintura', 'Sellador Acrílico (12 meses)', 'Brillo intenso y repelencia']
+            }
+        ];
+
+        // STATE MANAGEMENT
+        let selectedVehicle = 'auto'; // 'auto', 'suv', 'moto'
+        let selectedServiceId = 'completo';
+        let selectedDate = '';
+        let selectedTimeSlot = '';
+        let pendingBooking = null;
+
+        // VEHICLE MULTIPLIERS
+        const MULTIPLIERS = {
+            'auto': 1.0,
+            'suv': 1.25,
+            'moto': 0.70
+        };
+
+        // INITIALIZATION
+        window.addEventListener('DOMContentLoaded', () => {
+            renderServices();
+            setupMobileMenu();
+            setupDateLimits();
+            updateFormSummary();
+            loadBookingsFromStorage();
+        });
+
+        // RENDER SERVICES IN CARDS & FORM
+        function renderServices() {
+            const gridContainer = document.getElementById('services-grid');
+            const formContainer = document.getElementById('service-options');
+
+            gridContainer.innerHTML = '';
+            formContainer.innerHTML = '';
+
+            SERVICES.forEach(service => {
+                const currentPrice = calculatePrice(service.price, selectedVehicle);
+
+                // Main Services Card
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-3xl p-6 shadow-md border border-slate-100 hover:shadow-xl transition-all duration-300 flex flex-col justify-between';
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-600 flex items-center justify-center text-xl">
+                                <i class="fa-solid ${service.icon}"></i>
+                            </div>
+                            <span class="text-xs font-bold px-3 py-1 rounded-full ${service.badgeColor}">${service.badge}</span>
+                        </div>
+                        <h3 class="text-xl font-black text-gray-900">${service.title}</h3>
+                        <p class="text-xs text-gray-500 mt-1"><i class="fa-regular fa-clock mr-1"></i> Duración aprox: ${service.time}</p>
+                        <p class="text-xs text-gray-600 mt-3 leading-relaxed">${service.description}</p>
+                        
+                        <ul class="mt-4 space-y-2 border-t border-slate-100 pt-4">
+                            ${service.items.map(item => `
+                                <li class="text-xs text-gray-600 flex items-center gap-2">
+                                    <i class="fa-solid fa-check text-green-500"></i> ${item}
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] uppercase font-bold text-gray-400 block">Desde</span>
+                            <span class="text-2xl font-black text-gray-900">$${service.price.toLocaleString('es-AR')}</span>
+                        </div>
+                        <button onclick="selectServiceAndScroll('${service.id}')" class="bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-colors">
+                            Reservar
+                        </button>
+                    </div>
+                `;
+                gridContainer.appendChild(card);
+
+                // Form Radio Option Card
+                const optionCard = document.createElement('div');
+                optionCard.className = `service-opt-btn border-2 ${service.id === selectedServiceId ? 'border-orange-500 bg-orange-500/10' : 'border-gray-700 bg-gray-900'} rounded-2xl p-4 cursor-pointer transition-all flex items-center justify-between`;
+                optionCard.id = `opt-${service.id}`;
+                optionCard.onclick = () => selectService(service.id);
+                optionCard.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl ${service.id === selectedServiceId ? 'bg-orange-500 text-white' : 'bg-gray-800 text-gray-400'} flex items-center justify-center">
+                            <i class="fa-solid ${service.icon}"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white text-sm">${service.title}</h4>
+                            <span class="text-xs text-gray-400">${service.time}</span>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-base font-black text-orange-400">$${currentPrice.toLocaleString('es-AR')}</span>
+                    </div>
+                `;
+                formContainer.appendChild(optionCard);
+            });
+        }
+
+        // PRICE CALCULATOR
+        function calculatePrice(basePrice, vehicleType) {
+            const mult = MULTIPLIERS[vehicleType] || 1.0;
+            return Math.round(basePrice * mult);
+        }
+
+        // VEHICLE SELECTION HANDLER
+        function selectVehicle(type) {
+            selectedVehicle = type;
+            
+            // Update UI buttons
+            document.querySelectorAll('.vehicle-btn').forEach(btn => {
+                btn.classList.remove('border-orange-500', 'bg-orange-500/10', 'text-white');
+                btn.classList.add('border-gray-700', 'bg-gray-800/50', 'text-gray-400');
+            });
+
+            const activeBtn = document.getElementById(`v-${type}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('border-gray-700', 'bg-gray-800/50', 'text-gray-400');
+                activeBtn.classList.add('border-orange-500', 'bg-orange-500/10', 'text-white');
+            }
+
+            renderServices();
+            updateFormSummary();
+        }
+
+        // SERVICE SELECTION HANDLER
+        function selectService(serviceId) {
+            selectedServiceId = serviceId;
+            renderServices();
+            updateFormSummary();
+        }
+
+        function selectServiceAndScroll(serviceId) {
+            selectService(serviceId);
+            document.getElementById('turnos').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // DATE PICKER SETUP & TIME SLOTS
+        function setupDateLimits() {
+            const today = new Date();
+            const dateInput = document.getElementById('booking-date');
+            
+            // Min date = today
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            dateInput.min = `${yyyy}-${mm}-${dd}`;
+            dateInput.value = `${yyyy}-${mm}-${dd}`;
+            
+            selectedDate = dateInput.value;
+            generateTimeSlots();
+        }
+
+        function generateTimeSlots() {
+            const container = document.getElementById('time-slots-container');
+            const dateInput = document.getElementById('booking-date');
+            selectedDate = dateInput.value;
+            container.innerHTML = '';
+            selectedTimeSlot = '';
+            document.getElementById('selected-time').value = '';
+
+            const hours = ['08:00', '09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00', '18:00'];
+            
+            hours.forEach(hour => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'slot-btn bg-gray-900 border border-gray-700 hover:border-cyan-400 text-gray-300 text-xs font-semibold py-2 px-3 rounded-xl transition-all';
+                btn.innerText = `${hour} hs`;
+                btn.onclick = () => {
+                    document.querySelectorAll('.slot-btn').forEach(b => {
+                        b.classList.remove('bg-cyan-500', 'text-gray-900', 'border-cyan-500', 'font-bold');
+                        b.classList.add('bg-gray-900', 'text-gray-300', 'border-gray-700');
+                    });
+                    btn.classList.remove('bg-gray-900', 'text-gray-300', 'border-gray-700');
+                    btn.classList.add('bg-cyan-500', 'text-gray-900', 'border-cyan-500', 'font-bold');
+                    
+                    selectedTimeSlot = hour;
+                    document.getElementById('selected-time').value = hour;
+                    updateFormSummary();
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        // UPDATE FORM SUMMARY FOOTER
+        function updateFormSummary() {
+            const service = SERVICES.find(s => s.id === selectedServiceId);
+            const price = service ? calculatePrice(service.price, selectedVehicle) : 0;
+            const vehicleText = selectedVehicle === 'auto' ? 'Auto' : selectedVehicle === 'suv' ? 'Camioneta/SUV' : 'Moto';
+
+            document.getElementById('summary-price').innerText = `$${price.toLocaleString('es-AR')}`;
+            document.getElementById('summary-details').innerText = `${service ? service.title : 'Servicio'} para ${vehicleText} ${selectedTimeSlot ? 'a las ' + selectedTimeSlot + ' hs' : ''}`;
+        }
+
+        // SUBMIT BOOKING FORM
+        function handleBookingSubmit(event) {
+            event.preventDefault();
+
+            if (!selectedTimeSlot) {
+                alert('Por favor, selecciona un horario disponible para tu turno.');
+                return;
+            }
+
+            const name = document.getElementById('client-name').value.trim();
+            const phone = document.getElementById('client-phone').value.trim();
+            const plate = document.getElementById('client-plate').value.trim().toUpperCase();
+            const service = SERVICES.find(s => s.id === selectedServiceId);
+            const finalPrice = calculatePrice(service.price, selectedVehicle);
+
+            const booking = {
+                id: 'TURNO-' + Date.now(),
+                date: selectedDate,
+                time: selectedTimeSlot,
+                clientName: name,
+                clientPhone: phone,
+                clientPlate: plate,
+                vehicleType: selectedVehicle === 'auto' ? 'Auto' : selectedVehicle === 'suv' ? 'Camioneta/SUV' : 'Moto',
+                serviceName: service.title,
+                price: finalPrice,
+                createdAt: new Date().toISOString()
+            };
+
+            // Save booking in state & localStorage
+            pendingBooking = booking;
+            saveBookingToStorage(booking);
+
+            // Show confirmation modal
+            showSuccessModal(booking);
+        }
+
+        // LOCAL STORAGE HELPERS
+        function getStoredBookings() {
+            const data = localStorage.getItem('colo_carwash_bookings');
+            return data ? JSON.parse(data) : [];
+        }
+
+        function saveBookingToStorage(booking) {
+            const bookings = getStoredBookings();
+            bookings.unshift(booking);
+            localStorage.setItem('colo_carwash_bookings', JSON.stringify(bookings));
+            loadBookingsFromStorage();
+        }
+
+        function deleteBooking(bookingId) {
+            let bookings = getStoredBookings();
+            bookings = bookings.filter(b => b.id !== bookingId);
+            localStorage.setItem('colo_carwash_bookings', JSON.stringify(bookings));
+            loadBookingsFromStorage();
+        }
+
+        function clearAllBookings() {
+            if (confirm('¿Estás seguro de que deseas borrar todo el historial de turnos?')) {
+                localStorage.removeItem('colo_carwash_bookings');
+                loadBookingsFromStorage();
+            }
+        }
+
+        function loadBookingsFromStorage() {
+            const bookings = getStoredBookings();
+            const listContainer = document.getElementById('my-bookings-list');
+            const clearBtn = document.getElementById('btn-clear-all');
+            const badgeDesktop = document.getElementById('nav-badge');
+            const badgeMobile = document.getElementById('nav-badge-mobile');
+
+            // Update badges
+            if (bookings.length > 0) {
+                badgeDesktop.innerText = bookings.length;
+                badgeDesktop.classList.remove('hidden');
+                badgeMobile.innerText = bookings.length;
+                badgeMobile.classList.remove('hidden');
+                clearBtn.classList.remove('hidden');
+            } else {
+                badgeDesktop.classList.add('hidden');
+                badgeMobile.classList.add('hidden');
+                clearBtn.classList.add('hidden');
+            }
+
+            listContainer.innerHTML = '';
+
+            if (bookings.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="col-span-full bg-white rounded-3xl p-8 text-center border border-dashed border-slate-300">
+                        <i class="fa-regular fa-calendar-xmark text-4xl text-slate-300 mb-3"></i>
+                        <h3 class="text-base font-bold text-gray-700">No tenés turnos agendados</h3>
+                        <p class="text-xs text-gray-500 mt-1">Podés solicitar uno desde la sección de arriba.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            bookings.forEach(b => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition-shadow relative';
+                card.innerHTML = `
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+                        <span class="text-xs font-bold text-orange-600 bg-orange-50 px-2.5 py-1 rounded-lg">${b.id}</span>
+                        <button onclick="deleteBooking('${b.id}')" class="text-gray-400 hover:text-red-500 text-xs transition-colors p-1" title="Cancelar Turno">
+                            <i class="fa-solid fa-xmark text-base"></i>
+                        </button>
+                    </div>
+
+                    <div class="space-y-2 text-xs">
+                        <p class="text-gray-900 font-extrabold text-base">${b.serviceName}</p>
+                        <div class="flex items-center gap-2 text-gray-600">
+                            <i class="fa-regular fa-calendar text-orange-500"></i>
+                            <span>${formatDate(b.date)} - <strong>${b.time} hs</strong></span>
+                        </div>
+                        <div class="flex items-center gap-2 text-gray-600">
+                            <i class="fa-solid fa-car text-cyan-500"></i>
+                            <span>${b.vehicleType} (Patente: <strong>${b.clientPlate}</strong>)</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-gray-600">
+                            <i class="fa-solid fa-user text-amber-500"></i>
+                            <span>${b.clientName}</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs text-gray-400">Precio:</span>
+                        <span class="text-lg font-black text-gray-900">$${b.price.toLocaleString('es-AR')}</span>
+                    </div>
+                `;
+                listContainer.appendChild(card);
+            });
+        }
+
+        // FORMAT DATE TO HUMAN READABLE
+        function formatDate(dateStr) {
+            if (!dateStr) return '';
+            const parts = dateStr.split('-');
+            return `${parts[2]}/${parts[1]}/${parts[0]}`;
+        }
+
+        // SHOW SUCCESS MODAL
+        function showSuccessModal(b) {
+            const modal = document.getElementById('success-modal');
+            const summary = document.getElementById('modal-summary');
+            const wsBtn = document.getElementById('btn-whatsapp-send');
+
+            summary.innerHTML = `
+                <p><strong>Cliente:</strong> ${b.clientName}</p>
+                <p><strong>Servicio:</strong> ${b.serviceName} (${b.vehicleType})</p>
+                <p><strong>Fecha y Hora:</strong> ${formatDate(b.date)} a las ${b.time} hs</p>
+                <p><strong>Vehículo Patente:</strong> ${b.clientPlate}</p>
+                <p class="text-orange-600 font-bold"><strong>Total Estimado:</strong> $${b.price.toLocaleString('es-AR')}</p>
+            `;
+
+            // Prepare WhatsApp message link
+            const text = `*NUEVO TURNO - LAVADERO EL COLO*%0A%0A` +
+                `*Cliente:* ${b.clientName}%0A` +
+                `*Teléfono:* ${b.clientPhone}%0A` +
+                `*Servicio:* ${b.serviceName}%0A` +
+                `*Vehículo:* ${b.vehicleType} (${b.clientPlate})%0A` +
+                `*Fecha:* ${formatDate(b.date)} - ${b.time} hs%0A` +
+                `*Total Estimado:* $${b.price.toLocaleString('es-AR')}%0A%0A` +
+                `¡Hola Colo! Quisiera confirmar este turno reservado desde la web.`;
+
+            wsBtn.onclick = () => {
+                window.open(`https://wa.me/5493564123456?text=${text}`, '_blank');
+            };
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                document.getElementById('modal-card').classList.remove('scale-95');
+                document.getElementById('modal-card').classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('success-modal');
+            modal.classList.add('opacity-0');
+            document.getElementById('modal-card').classList.remove('scale-100');
+            document.getElementById('modal-card').classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                // Reset form
+                document.getElementById('booking-form').reset();
+                setupDateLimits();
+                updateFormSummary();
+            }, 300);
+        }
+
+        // MOBILE MENU TOGGLE
+        function setupMobileMenu() {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+            });
+
+            menu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    menu.classList.add('hidden');
+                });
+            });
+        }
+    </script>
+</body>
+</html>
