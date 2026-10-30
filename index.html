@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HubServicios - Directorio de Apps y Servicios</title>
+    <title>Directorio San Francisco, Arroyito y Zona</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome for Icons -->
+    <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -17,775 +17,1040 @@
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                     },
-                    animation: {
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'float': 'float 4s ease-in-out infinite',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%': { transform: 'translateY(-8px)' },
-                        }
-                    }
                 }
             }
         }
     </script>
+    <style>
+        /* Custom smooth transitions and scrollbar */
+        html {
+            scroll-behavior: smooth;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-indigo-500 selection:text-white">
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col justify-between">
 
-    <!-- Notification / Toast Container -->
-    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2 pointer-events-none"></div>
-
-    <!-- Header & Navigation -->
-    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-200/80 transition-all duration-300">
+    <!-- Header / Navigation -->
+    <header class="bg-white sticky top-0 z-40 shadow-sm border-b border-slate-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <!-- Logo -->
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="resetFilters()">
-                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30 transform hover:scale-105 transition-transform">
-                    <i class="fa-solid fa-cube text-xl"></i>
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-compass text-xl"></i>
                 </div>
                 <div>
-                    <span class="text-xl font-extrabold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">HubServicios</span>
-                    <span class="block text-xs font-medium text-slate-400 tracking-wider">MARKETPLACE DE APPS</span>
+                    <span class="text-lg font-bold bg-gradient-to-r from-blue-700 to-indigo-700 bg-clip-text text-transparent block leading-tight">Guía Regional</span>
+                    <span class="text-xs font-medium text-slate-400 tracking-wider uppercase">San Francisco • Arroyito • Zona</span>
                 </div>
-            </div>
+            </a>
 
             <!-- Desktop Nav Links -->
-            <nav class="hidden md:flex items-center space-x-8 font-medium text-sm text-slate-600">
-                <a href="#catalogo" class="hover:text-indigo-600 transition-colors">Directorio</a>
-                <a href="#destacados" class="hover:text-indigo-600 transition-colors">Destacados</a>
-                <a href="#registro" class="hover:text-indigo-600 transition-colors">Publica tu App</a>
+            <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+                <a href="#directorio" class="hover:text-blue-600 transition-colors">Directorio</a>
+                <a href="#destacados" class="hover:text-blue-600 transition-colors">Promos Destacadas</a>
+                <a href="#sumarse" class="text-blue-600 font-semibold bg-blue-50 px-4 py-2 rounded-xl hover:bg-blue-100 transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-store"></i> Sumar mi Negocio
+                </a>
+                <!-- Designer Access Button -->
+                <button onclick="openDesignerLoginModal()" id="designer-nav-btn" class="text-slate-700 font-semibold bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-xl transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-lock text-xs text-amber-600"></i> Acceso Diseñador
+                </button>
             </nav>
 
-            <!-- Action Button -->
-            <div class="flex items-center space-x-3">
-                <button onclick="openRegisterModal()" class="hidden sm:inline-flex items-center px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-semibold shadow-md shadow-indigo-500/20 hover:shadow-indigo-500/40 hover:opacity-95 transition-all transform active:scale-95">
-                    <i class="fa-solid fa-plus-circle mr-2"></i> Añadir Servicio
-                </button>
-                <button onclick="toggleMobileMenu()" class="md:hidden p-2.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors">
-                    <i class="fa-solid fa-bars text-lg" id="menu-icon"></i>
-                </button>
-            </div>
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100 transition-colors">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
         </div>
 
-        <!-- Mobile Menu Dropdown -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200 px-6 py-4 space-y-3">
-            <a href="#catalogo" onclick="toggleMobileMenu()" class="block font-medium text-slate-700 hover:text-indigo-600 py-1">Directorio</a>
-            <a href="#destacados" onclick="toggleMobileMenu()" class="block font-medium text-slate-700 hover:text-indigo-600 py-1">Destacados</a>
-            <a href="#registro" onclick="toggleMobileMenu()" class="block font-medium text-slate-700 hover:text-indigo-600 py-1">Publica tu App</a>
-            <button onclick="openRegisterModal(); toggleMobileMenu();" class="w-full mt-2 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold text-sm text-center shadow-md">
-                <i class="fa-solid fa-plus-circle mr-2"></i> Añadir Servicio
+        <!-- Mobile Menu Modal/Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-100 px-4 pt-2 pb-4 space-y-3">
+            <a href="#directorio" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 font-medium">Directorio</a>
+            <a href="#destacados" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 font-medium">Promos Destacadas</a>
+            <a href="#sumarse" class="block px-3 py-2 rounded-lg bg-blue-50 text-blue-700 font-semibold text-center">Sumar mi Negocio</a>
+            <button onclick="openDesignerLoginModal()" class="w-full text-left px-3 py-2 rounded-lg bg-slate-100 text-slate-700 font-semibold flex items-center gap-2">
+                <i class="fa-solid fa-lock text-xs text-amber-600"></i> Acceso Diseñador
             </button>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="relative overflow-hidden pt-16 pb-20 lg:pt-24 lg:pb-32 bg-gradient-to-b from-indigo-50/50 via-purple-50/30 to-slate-50">
-        <!-- Decorative blobs -->
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-full pointer-events-none overflow-hidden z-0">
-            <div class="absolute -top-40 -left-40 w-96 h-96 bg-purple-300/30 rounded-full blur-3xl animate-pulse-slow"></div>
-            <div class="absolute top-20 -right-40 w-96 h-96 bg-pink-300/30 rounded-full blur-3xl animate-pulse-slow" style="animation-delay: 1s;"></div>
-        </div>
+    <!-- Main Content -->
+    <main class="flex-grow">
 
-        <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
-            <span class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-indigo-100 text-indigo-700 text-xs font-semibold mb-6 shadow-sm">
-                <i class="fa-solid fa-sparkles text-indigo-500"></i>
-                <span>Descubre las mejores soluciones y consumos del mercado</span>
-            </span>
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-tight mb-6">
-                Todo lo que necesitas, <br class="hidden sm:inline">
-                <span class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">en un solo lugar.</span>
-            </h1>
-            <p class="text-lg sm:text-xl text-slate-600 mb-10 max-w-2xl mx-auto">
-                Explora apps, páginas y plataformas ordenadas por rubro. Mantenimientos, impresiones, comestibles y mucho más a un solo clic.
-            </p>
-
-            <!-- Real-Time Search Bar -->
-            <div class="max-w-2xl mx-auto bg-white p-2 rounded-2xl shadow-xl shadow-indigo-950/5 border border-slate-200/80 flex items-center transition-all focus-within:ring-4 focus-within:ring-indigo-500/20 focus-within:border-indigo-500">
-                <div class="pl-4 text-indigo-500 text-lg">
-                    <i class="fa-solid fa-magnifying-glass"></i>
+        <!-- Rotating Promotional Banner Section -->
+        <section id="destacados" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-4">
+            <div class="relative bg-slate-900 rounded-3xl overflow-hidden shadow-xl min-h-[380px] sm:min-h-[420px] flex items-center">
+                <!-- Background slides container -->
+                <div id="banner-slider" class="absolute inset-0 w-full h-full">
+                    <!-- Slides will be injected dynamically from featured items -->
                 </div>
-                <input type="text" id="searchInput" oninput="filterServices()" placeholder="Busca por servicio, app, palabra clave o rubro..." class="w-full px-4 py-3 bg-transparent text-slate-800 placeholder-slate-400 focus:outline-none text-sm sm:text-base">
-                <button onclick="clearSearch()" id="clearSearchBtn" class="hidden pr-3 text-slate-400 hover:text-slate-600">
-                    <i class="fa-solid fa-circle-xmark text-lg"></i>
+
+                <!-- Slider Controls -->
+                <button onclick="prevSlide()" class="absolute left-4 z-30 w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition-colors backdrop-blur-sm">
+                    <i class="fa-solid fa-chevron-left"></i>
                 </button>
-                <div class="hidden sm:block">
-                    <span class="px-4 py-2.5 bg-indigo-600 text-white rounded-xl text-sm font-semibold shadow-md">Buscar</span>
-                </div>
-            </div>
+                <button onclick="nextSlide()" class="absolute right-4 z-30 w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition-colors backdrop-blur-sm">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
 
-            <!-- Quick Stats -->
-            <div class="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto pt-8 border-t border-slate-200/60">
-                <div class="text-center">
-                    <span class="block text-2xl font-bold text-slate-900">+50</span>
-                    <span class="text-xs text-slate-500 font-medium">Servicios & Apps</span>
+                <!-- Slider Indicators -->
+                <div id="slider-dots" class="absolute bottom-4 left-0 right-0 z-30 flex justify-center gap-2">
+                    <!-- Dots injected dynamically -->
                 </div>
-                <div class="text-center">
-                    <span class="block text-2xl font-bold text-slate-900">8</span>
-                    <span class="text-xs text-slate-500 font-medium">Rubros Principales</span>
-                </div>
-                <div class="text-center">
-                    <span class="block text-2xl font-bold text-slate-900">4.8★</span>
-                    <span class="text-xs text-slate-500 font-medium">Calificación Promedio</span>
-                </div>
-                <div class="text-center">
-                    <span class="block text-2xl font-bold text-slate-900">100%</span>
-                    <span class="text-xs text-slate-500 font-medium">Verificados</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Main Content Container -->
-    <main id="catalogo" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        
-        <!-- Rubros / Category Filter Buttons -->
-        <div class="mb-10">
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Explorar por Rubro</h2>
-                <span id="activeFilterLabel" class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">Mostrando todos</span>
-            </div>
-            
-            <div id="categoryFilters" class="flex items-center space-x-3 overflow-x-auto pb-4 no-scrollbar">
-                <!-- Injected via JavaScript -->
-            </div>
-        </div>
-
-        <!-- Featured Carousel / Banner Section -->
-        <section id="destacados" class="mb-16">
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-2xl font-bold text-slate-900 tracking-tight flex items-center">
-                    <i class="fa-solid fa-star text-amber-500 mr-2"></i> Apps Recomendadas del Mes
-                </h2>
-                <span class="text-xs font-medium text-slate-400">Selección especial</span>
-            </div>
-            <div id="featuredBannerContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Injected via JavaScript -->
             </div>
         </section>
 
-        <!-- Services & Apps Grid -->
-        <div class="mb-8 flex items-center justify-between">
-            <h2 class="text-2xl font-bold text-slate-900 tracking-tight" id="sectionTitle">Directorio Completo</h2>
-            <div class="text-sm text-slate-500">
-                Mostrando <span id="resultsCount" class="font-bold text-slate-800">0</span> resultados
-            </div>
-        </div>
+        <!-- Search & Filters Section -->
+        <section id="directorio" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 mb-8">
+                <div class="flex flex-col lg:flex-row gap-4 items-center justify-between">
+                    
+                    <!-- Search Bar -->
+                    <div class="relative w-full lg:w-96">
+                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        <input type="text" id="search-input" oninput="handleSearch()" placeholder="Buscá por local, servicio o palabra clave..." class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-11 pr-4 py-3 text-slate-700 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:bg-white transition-all">
+                    </div>
 
-        <div id="servicesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            <!-- Cards injected via JavaScript -->
-        </div>
+                    <!-- Locality Filter Tabs -->
+                    <div class="flex flex-wrap items-center gap-2 w-full lg:w-auto">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider mr-2 hidden sm:inline">Localidad:</span>
+                        <button onclick="filterByLocation('Todas')" class="loc-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all bg-blue-600 text-white shadow-sm shadow-blue-500/20">Todas</button>
+                        <button onclick="filterByLocation('San Francisco')" class="loc-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all bg-slate-100 text-slate-600 hover:bg-slate-200">San Francisco</button>
+                        <button onclick="filterByLocation('Arroyito')" class="loc-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all bg-slate-100 text-slate-600 hover:bg-slate-200">Arroyito</button>
+                        <button onclick="filterByLocation('Zona')" class="loc-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all bg-slate-100 text-slate-600 hover:bg-slate-200">Zona</button>
+                    </div>
+                </div>
 
-        <!-- Empty State (Hidden by default) -->
-        <div id="emptyState" class="hidden text-center py-20 bg-white rounded-3xl border border-slate-200 shadow-sm mt-4">
-            <div class="w-20 h-20 bg-indigo-50 text-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
-                <i class="fa-solid fa-face-confused"></i>
+                <!-- Category Filters Row -->
+                <div id="category-filters-container" class="flex items-center gap-3 overflow-x-auto pb-2 pt-6 mt-6 border-t border-slate-100 no-scrollbar">
+                    <!-- Categories injected dynamically -->
+                </div>
             </div>
-            <h3 class="text-xl font-bold text-slate-800 mb-2">No encontramos resultados</h3>
-            <p class="text-slate-500 max-w-sm mx-auto mb-6 text-sm">Prueba buscando con otros términos o selecciona una categoría diferente.</p>
-            <button onclick="resetFilters()" class="px-5 py-2.5 bg-indigo-600 text-white font-semibold rounded-xl text-sm shadow-md hover:bg-indigo-700 transition-colors">
-                Ver todos los servicios
-            </button>
-        </div>
+
+            <!-- Results Grid -->
+            <div id="services-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Cards will be injected dynamically via JavaScript -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="hidden text-center py-16">
+                <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto text-slate-400 text-3xl mb-4">
+                    <i class="fa-solid fa-face-frown"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-700 mb-1">No se encontraron resultados</h3>
+                <p class="text-slate-500 text-sm">Intentá buscando con otros términos o cambiando los filtros seleccionados.</p>
+            </div>
+        </section>
+
+        <!-- Business Registration Form Section -->
+        <section id="sumarse" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="bg-gradient-to-br from-blue-900 to-indigo-900 text-white rounded-3xl p-8 sm:p-12 shadow-xl relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="relative z-10">
+                    <div class="text-center max-w-xl mx-auto mb-10">
+                        <span class="bg-blue-500/30 text-blue-200 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-3 inline-block">Unete a la red</span>
+                        <h2 class="text-2xl sm:text-4xl font-extrabold mb-3">¿Tenés un negocio, app o página web?</h2>
+                        <p class="text-blue-200 text-sm sm:text-base">Sumá tu emprendimiento al directorio regional de San Francisco, Arroyito y Zona de forma totalmente gratuita.</p>
+                    </div>
+
+                    <form id="business-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-blue-200 mb-1">Nombre del Local o Servicio</label>
+                                <input type="text" id="form-name" required placeholder="Ej: Pizzería Don Carlos" class="w-full bg-white/10 border border-white/20 rounded-2xl px-4 py-3 text-white placeholder-blue-300/60 focus:outline-none focus:border-white transition-all text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-blue-200 mb-1">Categoría</label>
+                                <select id="form-category" required class="w-full bg-slate-900 border border-white/20 rounded-2xl px-4 py-3 text-white focus:outline-none focus:border-white transition-all text-sm">
+                                    <!-- Populated dynamically -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-blue-200 mb-1">Localidad</label>
+                                <select id="form-locality" required class="w-full bg-slate-900 border border-white/20 rounded-2xl px-4 py-3 text-white focus:outline-none focus:border-white transition-all text-sm">
+                                    <option value="San Francisco" class="bg-slate-900">San Francisco</option>
+                                    <option value="Arroyito" class="bg-slate-900">Arroyito</option>
+                                    <option value="Zona" class="bg-slate-900">Zona (Saturnino M. María, Devoto, etc.)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-blue-200 mb-1">WhatsApp / Teléfono</label>
+                                <input type="text" id="form-phone" required placeholder="Ej: 3564 123456" class="w-full bg-white/10 border border-white/20 rounded-2xl px-4 py-3 text-white placeholder-blue-300/60 focus:outline-none focus:border-white transition-all text-sm">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-blue-200 mb-1">Sitio Web o App (URL)</label>
+                                <input type="url" id="form-website" placeholder="https://minegocio.com" class="w-full bg-white/10 border border-white/20 rounded-2xl px-4 py-3 text-white placeholder-blue-300/60 focus:outline-none focus:border-white transition-all text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-blue-200 mb-1">Imagen / Foto (URL)</label>
+                                <input type="url" id="form-image" placeholder="https://images.unsplash.com/..." class="w-full bg-white/10 border border-white/20 rounded-2xl px-4 py-3 text-white placeholder-blue-300/60 focus:outline-none focus:border-white transition-all text-sm">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-blue-200 mb-1">Breve Descripción</label>
+                            <textarea id="form-desc" rows="3" required placeholder="Contanos qué ofrece tu comercio o servicio..." class="w-full bg-white/10 border border-white/20 rounded-2xl px-4 py-3 text-white placeholder-blue-300/60 focus:outline-none focus:border-white transition-all text-sm"></textarea>
+                        </div>
+
+                        <div class="text-center pt-2">
+                            <button type="submit" class="bg-white text-blue-900 font-bold px-8 py-3.5 rounded-2xl shadow-lg hover:bg-blue-50 transition-all w-full sm:w-auto">
+                                <i class="fa-solid fa-paper-plane mr-2"></i> Enviar mi Negocio al Directorio
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <!-- Register / Submit Business Banner Section -->
-    <section id="registro" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-indigo-900 via-purple-900 to-slate-900 text-white p-8 sm:p-12 shadow-2xl">
-            <div class="absolute -right-10 -bottom-10 w-80 h-80 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="relative z-10 max-w-2xl">
-                <span class="inline-block px-3 py-1 rounded-full bg-indigo-500/30 text-indigo-300 text-xs font-semibold mb-4 border border-indigo-500/30">
-                    ¿Eres proveedor o creador?
-                </span>
-                <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4">
-                    Publica tu App o Servicio en HubServicios
-                </h2>
-                <p class="text-indigo-200 text-base mb-8">
-                    Llega a miles de usuarios interesados en tus soluciones de mantenimiento, impresiones, comestibles y más. Es rápido, sencillo y gratuito.
-                </p>
-                <button onclick="openRegisterModal()" class="px-6 py-3.5 bg-white text-indigo-950 font-bold rounded-xl shadow-lg hover:bg-indigo-50 transition-all transform hover:-translate-y-0.5 flex items-center space-x-2">
-                    <i class="fa-solid fa-rocket text-indigo-600"></i>
-                    <span>Añadir mi Negocio Ahora</span>
+    <!-- Details Modal -->
+    <div id="details-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl transform transition-all">
+            <div class="relative h-48 sm:h-56">
+                <img id="modal-img" src="" alt="Servicio" class="w-full h-full object-cover">
+                <button onclick="closeModal()" class="absolute top-4 right-4 w-9 h-9 bg-black/50 hover:bg-black/80 text-white rounded-full flex items-center justify-center transition-colors">
+                    <i class="fa-solid fa-xmark"></i>
                 </button>
+                <div class="absolute bottom-4 left-4">
+                    <span id="modal-category" class="bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider"></span>
+                </div>
+            </div>
+            <div class="p-6 sm:p-8 space-y-4">
+                <div>
+                    <span id="modal-locality" class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1"></span>
+                    <h3 id="modal-title" class="text-2xl font-bold text-slate-800"></h3>
+                </div>
+                <p id="modal-desc" class="text-slate-600 text-sm leading-relaxed"></p>
+                <div class="pt-4 border-t border-slate-100 flex flex-col sm:flex-row gap-3">
+                    <a id="modal-whatsapp" href="#" target="_blank" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-4 rounded-2xl text-center transition-colors flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-lg"></i> Contactar por WhatsApp
+                    </a>
+                    <a id="modal-link" href="#" target="_blank" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-2xl text-center transition-colors flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-globe"></i> Visitar Sitio / App
+                    </a>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-slate-200 py-12 mt-12 text-sm text-slate-500">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
-            <div class="flex items-center space-x-3">
-                <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center text-white text-sm font-bold shadow-md">
-                    <i class="fa-solid fa-cube"></i>
+    <!-- Designer Login Modal -->
+    <div id="designer-login-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl relative">
+            <button onclick="closeDesignerLoginModal()" class="absolute top-4 right-4 w-8 h-8 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-center mb-6">
+                <div class="w-14 h-14 bg-amber-100 text-amber-700 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl shadow-inner">
+                    <i class="fa-solid fa-lock"></i>
                 </div>
-                <span class="font-bold text-slate-800 text-base">HubServicios &copy; 2026</span>
+                <h3 class="text-xl font-bold text-slate-800">Acceso Diseñador</h3>
+                <p class="text-xs text-slate-500 mt-1">Ingresá la clave secreta para administrar categorías y negocios.</p>
             </div>
-            <div class="flex space-x-6 font-medium">
-                <a href="#catalogo" class="hover:text-indigo-600 transition-colors">Directorio</a>
-                <a href="#destacados" class="hover:text-indigo-600 transition-colors">Destacados</a>
-                <a href="#" onclick="openRegisterModal(); return false;" class="hover:text-indigo-600 transition-colors">Postular App</a>
-            </div>
-            <div class="flex space-x-4 text-slate-400">
-                <a href="#" class="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center hover:bg-indigo-50 hover:text-indigo-600 transition-colors"><i class="fa-brands fa-twitter"></i></a>
-                <a href="#" class="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center hover:bg-indigo-50 hover:text-indigo-600 transition-colors"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#" class="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center hover:bg-indigo-50 hover:text-indigo-600 transition-colors"><i class="fa-brands fa-linkedin-in"></i></a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Register / Submit Business Modal -->
-    <div id="registerModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
-        <div id="modalContent" class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl transform scale-95 transition-transform duration-300 max-h-[90vh] overflow-y-auto">
-            <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
+            <form onsubmit="handleDesignerLogin(event)" class="space-y-4">
                 <div>
-                    <h3 class="text-xl font-bold text-slate-900">Añadir Nuevo Servicio o App</h3>
-                    <p class="text-xs text-slate-500">Completa los datos para enlistar tu solución</p>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Clave de Acceso</label>
+                    <input type="password" id="designer-password" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-slate-800 focus:outline-none focus:border-blue-500 transition-all text-sm">
                 </div>
-                <button onclick="closeRegisterModal()" class="w-9 h-9 rounded-full bg-slate-100 text-slate-400 hover:text-slate-600 hover:bg-slate-200 flex items-center justify-center transition-colors">
-                    <i class="fa-solid fa-xmark text-base"></i>
+                <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-2xl shadow-lg transition-all text-sm">
+                    Ingresar al Panel
                 </button>
-            </div>
-
-            <form id="submitBusinessForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Nombre de la App / Servicio</label>
-                    <input type="text" id="formName" required placeholder="Ej: FixMaster Mantenimiento" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm">
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Rubro / Categoría</label>
-                        <select id="formCategory" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm bg-white">
-                            <option value="Mantenimientos">Mantenimientos</option>
-                            <option value="Impresiones">Impresiones</option>
-                            <option value="Comestibles">Comestibles</option>
-                            <option value="Tecnología">Tecnología</option>
-                            <option value="Salud y Bienestar">Salud y Bienestar</option>
-                            <option value="Belleza y Estética">Belleza y Estética</option>
-                            <option value="Finanzas">Finanzas</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Icono (FontAwesome)</label>
-                        <input type="text" id="formIcon" required placeholder="fa-solid fa-wrench" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm" value="fa-solid fa-star">
-                        <span class="text-[10px] text-slate-400 mt-1 block">Ej: fa-solid fa-print, fa-solid fa-burger</span>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Breve Descripción</label>
-                    <textarea id="formDescription" rows="3" required placeholder="Describe los beneficios principales de tu app o servicio en pocas palabras..." class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm"></textarea>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">URL / Enlace Web</label>
-                    <input type="url" id="formUrl" required placeholder="https://tuempresa.com" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm" value="https://example.com">
-                </div>
-
-                <div class="pt-4 flex items-center justify-end space-x-3">
-                    <button type="button" onclick="closeRegisterModal()" class="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-600 font-semibold text-sm hover:bg-slate-50 transition-colors">
-                        Cancelar
-                    </button>
-                    <button type="submit" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold text-sm shadow-md hover:opacity-95 transition-all">
-                        Publicar Servicio
-                    </button>
-                </div>
             </form>
         </div>
     </div>
 
-    <!-- Visit Simulated Action Modal / Redirect Notification -->
-    <div id="visitModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
-        <div id="visitModalContent" class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl text-center transform scale-95 transition-transform duration-300">
-            <div id="visitModalIcon" class="w-16 h-16 rounded-2xl bg-indigo-50 text-indigo-600 text-2xl flex items-center justify-center mx-auto mb-4 shadow-inner">
-                <i class="fa-solid fa-arrow-up-right-from-square"></i>
-            </div>
-            <h3 id="visitModalTitle" class="text-xl font-bold text-slate-900 mb-1">Abriendo Servicio</h3>
-            <p id="visitModalText" class="text-xs text-slate-500 mb-6">Redirigiendo de forma segura a la plataforma externa...</p>
-            
-            <div class="p-3 bg-slate-50 rounded-2xl mb-6 border border-slate-100 flex items-center justify-center space-x-2 text-slate-700 text-xs font-mono">
-                <i class="fa-solid fa-lock text-emerald-500"></i>
-                <span id="visitModalUrl" class="truncate">https://example.com</span>
+    <!-- Designer Dashboard Modal -->
+    <div id="designer-dashboard-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl flex flex-col">
+            <div class="sticky top-0 bg-white border-b border-slate-100 px-6 py-4 flex items-center justify-between z-10">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-indigo-600 text-white rounded-xl flex items-center justify-center">
+                        <i class="fa-solid fa-gauge-high"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-800">Panel de Diseñador & Administrador</h3>
+                        <p class="text-xs text-slate-400">Gestión completa de categorías, negocios y destacados del banner</p>
+                    </div>
+                </div>
+                <button onclick="closeDesignerDashboard()" class="w-9 h-9 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full flex items-center justify-center transition-colors">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
 
-            <div class="flex space-x-3">
-                <button onclick="closeVisitModal()" class="w-full py-2.5 rounded-xl border border-slate-200 text-slate-600 font-semibold text-sm hover:bg-slate-50 transition-colors">
-                    Cancelar
-                </button>
-                <a id="visitModalLink" href="#" target="_blank" onclick="closeVisitModal()" class="w-full py-2.5 rounded-xl bg-indigo-600 text-white font-semibold text-sm shadow-md hover:bg-indigo-700 transition-colors flex items-center justify-center space-x-2">
-                    <span>Continuar</span>
-                    <i class="fa-solid fa-external-link text-xs"></i>
-                </a>
+            <div class="p-6 sm:p-8 space-y-8">
+                <!-- Tab Controls inside Dashboard -->
+                <div class="flex gap-2 border-b border-slate-100 pb-4">
+                    <button onclick="switchAdminTab('negocios')" id="tab-btn-negocios" class="px-5 py-2.5 rounded-2xl font-semibold text-sm transition-all bg-slate-900 text-white">Gestionar Negocios</button>
+                    <button onclick="switchAdminTab('categorias')" id="tab-btn-categorias" class="px-5 py-2.5 rounded-2xl font-semibold text-sm transition-all bg-slate-100 text-slate-600 hover:bg-slate-200">Gestionar Categorías</button>
+                </div>
+
+                <!-- Tab 1: Negocios Management -->
+                <div id="admin-tab-negocios" class="space-y-6">
+                    <div class="bg-slate-50 border border-slate-200/80 rounded-3xl p-6">
+                        <h4 class="font-bold text-slate-800 text-base mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-plus-circle text-blue-600"></i> Cargar o Editar Negocio / App / Web
+                        </h4>
+                        <form id="admin-business-form" onsubmit="handleAdminBusinessSubmit(event)" class="space-y-4">
+                            <input type="hidden" id="admin-bus-id">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Nombre</label>
+                                    <input type="text" id="admin-bus-name" required placeholder="Ej: Pizzería La Strada" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-2.5 text-slate-800 text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Categoría</label>
+                                    <select id="admin-bus-category" required class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-2.5 text-slate-800 text-sm">
+                                        <!-- Populated dynamically -->
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Localidad</label>
+                                    <select id="admin-bus-locality" required class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-2.5 text-slate-800 text-sm">
+                                        <option value="San Francisco">San Francisco</option>
+                                        <option value="Arroyito">Arroyito</option>
+                                        <option value="Zona">Zona</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">WhatsApp / Teléfono</label>
+                                    <input type="text" id="admin-bus-phone" required placeholder="Ej: 3564123456" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-2.5 text-slate-800 text-sm">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Sitio Web o App (URL)</label>
+                                    <input type="url" id="admin-bus-website" placeholder="https://..." class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-2.5 text-slate-800 text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Imagen (URL)</label>
+                                    <input type="url" id="admin-bus-image" required placeholder="https://..." class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-2.5 text-slate-800 text-sm">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Descripción</label>
+                                <textarea id="admin-bus-desc" rows="2" required placeholder="Breve descripción..." class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-2.5 text-slate-800 text-sm"></textarea>
+                            </div>
+                            <div class="flex items-center gap-2 pt-1">
+                                <input type="checkbox" id="admin-bus-featured" class="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500">
+                                <label for="admin-bus-featured" class="text-sm font-medium text-slate-700">Destacar en el Banner Rotativo Principal</label>
+                            </div>
+                            <div class="flex gap-3 pt-2">
+                                <button type="submit" id="admin-bus-submit-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-2.5 rounded-2xl text-sm transition-all shadow-md">Guardar Negocio</button>
+                                <button type="button" onclick="resetAdminBusForm()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold px-5 py-2.5 rounded-2xl text-sm transition-all">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- List of businesses for admin -->
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-base mb-3">Negocios Registrados</h4>
+                        <div id="admin-business-list" class="space-y-3 max-h-72 overflow-y-auto pr-2">
+                            <!-- Injected dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Categorias Management -->
+                <div id="admin-tab-categorias" class="hidden space-y-6">
+                    <div class="bg-slate-50 border border-slate-200/80 rounded-3xl p-6">
+                        <h4 class="font-bold text-slate-800 text-base mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-folder-plus text-indigo-600"></i> Crear o Editar Categoría
+                        </h4>
+                        <form id="admin-cat-form" onsubmit="handleAdminCatSubmit(event)" class="space-y-4">
+                            <input type="hidden" id="admin-cat-old-name">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Nombre de la Categoría</label>
+                                    <input type="text" id="admin-cat-name" required placeholder="Ej: Automotor" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-2.5 text-slate-800 text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Icono FontAwesome (clase)</label>
+                                    <input type="text" id="admin-cat-icon" required placeholder="Ej: fa-solid fa-car" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-2.5 text-slate-800 text-sm">
+                                </div>
+                            </div>
+                            <div class="flex gap-3 pt-2">
+                                <button type="submit" id="admin-cat-submit-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-2.5 rounded-2xl text-sm transition-all shadow-md">Guardar Categoría</button>
+                                <button type="button" onclick="resetAdminCatForm()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold px-5 py-2.5 rounded-2xl text-sm transition-all">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- List of categories for admin -->
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-base mb-3">Categorías Existentes</h4>
+                        <div id="admin-category-list" class="space-y-3 max-h-72 overflow-y-auto pr-2">
+                            <!-- Injected dynamically -->
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Application JavaScript Logic -->
+    <!-- Success Notification Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-28 opacity-0 transition-all duration-300 bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-xl flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center text-white">
+            <i class="fa-solid fa-check text-sm"></i>
+        </div>
+        <div>
+            <h4 class="font-bold text-sm" id="toast-title">¡Operación exitosa!</h4>
+            <p class="text-xs text-slate-300" id="toast-desc">Los cambios se guardaron correctamente.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-100 py-10 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-sm">
+            <p>Guía y Directorio Regional de Aplicaciones y Páginas Web • San Francisco, Arroyito y Zona</p>
+            <button onclick="openDesignerLoginModal()" class="text-xs font-semibold text-slate-400 hover:text-slate-700 transition-colors flex items-center gap-1">
+                <i class="fa-solid fa-lock text-[10px]"></i> Panel Diseñador
+            </button>
+        </div>
+    </footer>
+
+    <!-- JavaScript Data and Logic -->
     <script>
-        // Database of Services and Apps
-        const servicesData = [
+        // Default categories with icons
+        const defaultCategories = [
+            { name: "Gastronomía", icon: "fa-solid fa-utensils text-orange-500" },
+            { name: "Comercios", icon: "fa-solid fa-store text-emerald-500" },
+            { name: "Servicios", icon: "fa-solid fa-screwdriver-wrench text-blue-500" },
+            { name: "Salud y Belleza", icon: "fa-solid fa-heart-pulse text-rose-500" },
+            { name: "Tecnología", icon: "fa-solid fa-laptop text-indigo-500" }
+        ];
+
+        // Initial Mock Database of Services & Apps with featured flag
+        const defaultServices = [
             {
                 id: 1,
-                name: "Reparo Todo",
-                category: "Mantenimientos",
-                description: "Plomería, electricidad y reparaciones generales a domicilio con técnicos certificados en minutos. En San Francisco y Zona",
-                rating: 4.9,
-                reviewsCount: 340,
-                icon: "fa-solid fa-wrench",
-                image: "../imágenes/reparotodo.jpg",
-                url: "https://hermesjs44.github.io/propia/rodrigo/index.html",
-                featured: true,
-                badgeColor: "bg-blue-50 text-blue-700 border-blue-200",
-                gradient: "from-blue-500 to-cyan-500"
+                name: "Pizzería La Strada",
+                category: "Gastronomía",
+                locality: "San Francisco",
+                description: "App de pedidos online y delivery de pizzas artesanales, empanadas y calzones en todo San Francisco.",
+                image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80",
+                website: "https://example.com/lastrada",
+                whatsapp: "3564123456",
+                featured: true
             },
             {
                 id: 2,
-                name: "PrintExpress 24h",
-                category: "Impresiones",
-                description: "Imprenta digital y offset express. Envía tus archivos PDF y recíbelos impresos en la puerta de tu oficina.",
-                rating: 4.8,
-                reviewsCount: 215,
-                icon: "fa-solid fa-print",
-                image: "",
-                url: "https://printexpress-example.com",
-                featured: true,
-                badgeColor: "bg-purple-50 text-purple-700 border-purple-200",
-                gradient: "from-purple-500 to-pink-500"
+                name: "Arroyito Materiales",
+                category: "Comercios",
+                locality: "Arroyito",
+                description: "Página web de venta y distribución de materiales para la construcción, cerámicos y sanitarios con cotizador online.",
+                image: "https://images.unsplash.com/photo-1541888946425-d0fbb18f1f92?auto=format&fit=crop&w=800&q=80",
+                website: "https://example.com/arroyitomateriales",
+                whatsapp: "3576456789",
+                featured: true
             },
             {
                 id: 3,
-                name: "MarketFresh Comestibles",
-                category: "Comestibles",
-                description: "Supermercado online de productos frescos, orgánicos y abarrotes con entrega express en menos de 1 hora.",
-                rating: 4.9,
-                reviewsCount: 680,
-                icon: "fa-solid fa-basket-shopping",
-                image: "",
-                url: "https://marketfresh-example.com",
-                featured: true,
-                badgeColor: "bg-emerald-50 text-emerald-700 border-emerald-200",
-                gradient: "from-emerald-500 to-teal-500"
+                name: "Centro Odontológico Integral",
+                category: "Salud y Belleza",
+                locality: "San Francisco",
+                description: "Plataforma de turnos médicos online, atención en ortodoncia, implantes y estética dental.",
+                image: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=800&q=80",
+                website: "https://example.com/odontologia",
+                whatsapp: "3564987654",
+                featured: false
             },
             {
                 id: 4,
-                name: "GN Guillermo Nagel",
-                category: "Mantenimientos",
-                description: "Servicio técnico especializado en Mantenimiento edilicio General, con personal sumamente capacitado.En Arroyito y Zona",
-                rating: 4.7,
-                reviewsCount: 142,
-                icon: "nagel.ico",
-                image: "",
-                url: "https://hermesjs44.github.io/propia/colita/index.html",
-                featured: false,
-                badgeColor: "bg-blue-50 text-blue-700 border-blue-200",
-                gradient: "from-indigo-500 to-blue-600"
+                name: "TecnoSur Informática",
+                category: "Tecnología",
+                locality: "Zona",
+                description: "Servicio técnico oficial de PC, notebooks, armado de equipos gamers y venta de periféricos con envío zonal.",
+                image: "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=800&q=80",
+                website: "https://example.com/tecnosur",
+                whatsapp: "3564332211",
+                featured: true
             },
             {
                 id: 5,
-                name: "GrafikLab 3D",
-                category: "Impresiones",
-                description: "Impresión 3D de alta precisión, cartelería corporativa, plotter de corte y rotulación vehicular.",
-                rating: 4.6,
-                reviewsCount: 98,
-                icon: "logo_polleria.ico",
-                image: "",
-                url: "https://grafiklab-example.com",
-                featured: false,
-                badgeColor: "bg-purple-50 text-purple-700 border-purple-200",
-                gradient: "from-violet-500 to-purple-600"
+                name: "Café del Boulevard",
+                category: "Gastronomía",
+                locality: "Arroyito",
+                description: "Cafetería de especialidad, pastelería artesanal y desayunos con carta digital y reservas por web.",
+                image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80",
+                website: "https://example.com/cafeboulevard",
+                whatsapp: "3576112233",
+                featured: false
             },
             {
                 id: 6,
-                name: "GourmetBox Delivery",
-                category: "Comestibles",
-                description: "Platos preparados por chefs locales congelados al vacío y listos para calentar y disfrutar en casa.",
-                rating: 4.8,
-                reviewsCount: 310,
-                icon: "fa-solid fa-utensils",
-                image: "",
-                url: "https://gourmetbox-example.com",
-                featured: false,
-                badgeColor: "bg-emerald-50 text-emerald-700 border-emerald-200",
-                gradient: "from-teal-500 to-emerald-600"
+                name: "Ferretería Industrial San Justo",
+                category: "Comercios",
+                locality: "San Francisco",
+                description: "Herramientas eléctricas, bulonería y suministros para la industria con catálogo web actualizado.",
+                image: "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?auto=format&fit=crop&w=800&q=80",
+                website: "https://example.com/ferreteriasanjusto",
+                whatsapp: "3564778899",
+                featured: false
             },
             {
                 id: 7,
-                name: "CloudSync ERP",
-                category: "Tecnología",
-                description: "Software en la nube para control de inventarios, facturación electrónica y gestión integral de pequeños negocios.",
-                rating: 4.9,
-                reviewsCount: 520,
-                icon: "fa-solid fa-cloud",
-                image: "",
-                url: "https://cloudsync-example.com",
-                featured: false,
-                badgeColor: "bg-amber-50 text-amber-700 border-amber-200",
-                gradient: "from-amber-500 to-orange-500"
+                name: "Estudio Contabilidad Digital",
+                category: "Servicios",
+                locality: "Zona",
+                description: "Asesoramiento contable e impositivo para monotributistas, PyMEs y agropecuarias de la región.",
+                image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80",
+                website: "https://example.com/estudiocontable",
+                whatsapp: "3564554433",
+                featured: false
             },
             {
                 id: 8,
-                name: "VitalSalud Telemedicina",
-                category: "Salud y Bienestar",
-                description: "Consultas médicas online 24/7 con especialistas en pediatría, medicina general, nutrición y psicología.",
-                rating: 4.9,
-                reviewsCount: 890,
-                icon: "fa-solid fa-heart-pulse",
-                image: "",
-                url: "https://vitalsalud-example.com",
-                featured: false,
-                badgeColor: "bg-rose-50 text-rose-700 border-rose-200",
-                gradient: "from-rose-500 to-pink-600"
-            },
-            {
-                id: 9,
-                name: "GlamourApp Estética",
-                category: "Belleza y Estética",
-                description: "Reserva turnos instantáneos en las mejores peluquerías, spas y centros de estética cerca de tu ubicación.",
-                rating: 4.7,
-                reviewsCount: 260,
-                icon: "fa-solid fa-scissors",
-                image: "",
-                url: "https://glamourapp-example.com",
-                featured: false,
-                badgeColor: "bg-fuchsia-50 text-fuchsia-700 border-fuchsia-200",
-                gradient: "from-fuchsia-500 to-pink-500"
-            },
-            {
-                id: 10,
-                name: "CashFlow Control",
-                category: "Finanzas",
-                description: "App de finanzas personales para control de gastos, recordatorios de pagos y metas de ahorro inteligentes.",
-                rating: 4.8,
-                reviewsCount: 410,
-                icon: "fa-solid fa-wallet",
-                image: "",
-                url: "https://cashflow-example.com",
-                featured: false,
-                badgeColor: "bg-indigo-50 text-indigo-700 border-indigo-200",
-                gradient: "from-indigo-600 to-violet-600"
+                name: "Gimnasio Evolution Fit",
+                category: "Salud y Belleza",
+                locality: "Arroyito",
+                description: "App de reservas de turnos para musculación, clases de funcional, spinning y seguimiento de rutinas.",
+                image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80",
+                website: "https://example.com/evolutionfit",
+                whatsapp: "3576998877",
+                featured: false
             }
         ];
 
-        // Categories Configuration with Icons
-        const categories = [
-            { name: "Todos", icon: "fa-solid fa-border-all" },
-            { name: "Mantenimientos", icon: "fa-solid fa-wrench" },
-            { name: "Impresiones", icon: "fa-solid fa-print" },
-            { name: "Comestibles", icon: "fa-solid fa-basket-shopping" },
-            { name: "Tecnología", icon: "fa-solid fa-microchip" },
-            { name: "Salud y Bienestar", icon: "fa-solid fa-heart-pulse" },
-            { name: "Belleza y Estética", icon: "fa-solid fa-wand-magic-sparkles" },
-            { name: "Finanzas", icon: "fa-solid fa-chart-pie" }
-        ];
+        // Load data from localStorage or fallback to defaults
+        let categoriesData = JSON.parse(localStorage.getItem('sf_categories')) || defaultCategories;
+        let servicesData = JSON.parse(localStorage.getItem('sf_services')) || defaultServices;
 
-        let currentCategory = "Todos";
-        let searchQuery = "";
-
-        // Initialize application on window load
-        window.onload = function() {
-            renderCategories();
-            renderFeaturedBanner();
-            filterServices();
-        };
-
-        // Render Category Filter Buttons
-        function renderCategories() {
-            const container = document.getElementById("categoryFilters");
-            container.innerHTML = categories.map(cat => {
-                const isActive = currentCategory === cat.name;
-                const activeClass = isActive 
-                    ? "bg-indigo-600 text-white shadow-md shadow-indigo-500/30 border-indigo-600" 
-                    : "bg-white text-slate-600 border-slate-200 hover:bg-slate-100 hover:border-slate-300";
-                
-                return `
-                    <button onclick="selectCategory('${cat.name}')" class="flex items-center space-x-2 px-4 py-2.5 rounded-2xl border text-sm font-semibold whitespace-nowrap transition-all duration-200 ${activeClass}">
-                        <i class="${cat.icon}"></i>
-                        <span>${cat.name}</span>
-                    </button>
-                `;
-            }).join('');
+        function saveToLocalStorage() {
+            localStorage.setItem('sf_categories', JSON.stringify(categoriesData));
+            localStorage.setItem('sf_services', JSON.stringify(servicesData));
         }
 
-        // Select Category Filter
-        function selectCategory(categoryName) {
-            currentCategory = categoryName;
-            document.getElementById("activeFilterLabel").innerText = categoryName === "Todos" ? "Mostrando todos" : `Rubro: ${categoryName}`;
+        // State variables
+        let currentCategory = 'Todas';
+        let currentLocality = 'Todas';
+        let searchQuery = '';
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
             renderCategories();
-            filterServices();
-        }
+            renderServices();
+            initSlider();
 
-        // Filter Services based on Category and Search Input
-        function filterServices() {
-            searchQuery = document.getElementById("searchInput").value.toLowerCase().trim();
-            const clearBtn = document.getElementById("clearSearchBtn");
-            
-            if(searchQuery.length > 0) {
-                clearBtn.classList.remove("hidden");
-            } else {
-                clearBtn.classList.add("hidden");
-            }
-
-            const filtered = servicesData.filter(service => {
-                const matchesCategory = currentCategory === "Todos" || service.category === currentCategory;
-                const matchesSearch = service.name.toLowerCase().includes(searchQuery) ||
-                                      service.description.toLowerCase().includes(searchQuery) ||
-                                      service.category.toLowerCase().includes(searchQuery);
-                return matchesCategory && matchesSearch;
+            // Mobile menu toggle
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
             });
+        });
 
-            renderServicesGrid(filtered);
-        }
+        // Banner Slider Logic
+        let activeSlideIndex = 0;
+        let sliderInterval;
 
-        // Clear Search Input
-        function clearSearch() {
-            document.getElementById("searchInput").value = "";
-            filterServices();
-        }
+        function renderBannerSlider() {
+            const featuredItems = servicesData.filter(s => s.featured);
+            const sliderContainer = document.getElementById('banner-slider');
+            const dotsContainer = document.getElementById('slider-dots');
 
-        // Reset All Filters
-        function resetFilters() {
-            currentCategory = "Todos";
-            document.getElementById("searchInput").value = "";
-            document.getElementById("activeFilterLabel").innerText = "Mostrando todos";
-            renderCategories();
-            filterServices();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Render Featured Banner Cards
-        function renderFeaturedBanner() {
-            const container = document.getElementById("featuredBannerContainer");
-            const featured = servicesData.filter(s => s.featured);
-
-            container.innerHTML = featured.map(service => {
-                const mediaContent = service.image 
-                    ? `<img src="${service.image}" alt="${service.name}" class="w-12 h-12 rounded-2xl object-cover shadow-md transform group-hover:scale-105 transition-transform" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-12 h-12 rounded-2xl bg-gradient-to-tr ${service.gradient} text-white flex items-center justify-center text-xl shadow-md\'><i class=\'${service.icon}\'></i></div>';">`
-                    : `<div class="w-12 h-12 rounded-2xl bg-gradient-to-tr ${service.gradient} text-white flex items-center justify-center text-xl shadow-md">
-                           <i class="${service.icon}"></i>
-                       </div>`;
-
-                return `
-                <div class="group relative bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${service.gradient} opacity-5 rounded-bl-full pointer-events-none group-hover:scale-110 transition-transform"></div>
-                    <div>
-                        <div class="flex items-center justify-between mb-4">
-                            ${mediaContent}
-                            <span class="px-2.5 py-1 rounded-full text-xs font-semibold border ${service.badgeColor}">
-                                ${service.category}
-                            </span>
+            if (featuredItems.length === 0) {
+                sliderContainer.innerHTML = `
+                    <div class="banner-slide absolute inset-0 transition-opacity duration-1000 opacity-100 flex items-center">
+                        <div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-transparent z-10"></div>
+                        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1600&q=80" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="relative z-20 max-w-2xl px-6 sm:px-12 text-white">
+                            <span class="bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-4 inline-block">Región</span>
+                            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4">Directorio San Francisco, Arroyito y Zona</h1>
+                            <p class="text-slate-300 text-sm sm:text-base mb-6">Encontrá comercios, servicios y apps locales fácilmente.</p>
                         </div>
-                        <h3 class="text-lg font-bold text-slate-900 mb-1 group-hover:text-indigo-600 transition-colors">${service.name}</h3>
-                        <p class="text-xs text-slate-500 line-clamp-2 mb-4">${service.description}</p>
                     </div>
-                    <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-2">
-                        <div class="flex items-center space-x-1 text-xs font-bold text-amber-500">
-                            <i class="fa-solid fa-star"></i>
-                            <span>${service.rating}</span>
-                            <span class="text-slate-400 font-normal">(${service.reviewsCount})</span>
-                        </div>
-                        <button onclick="openVisitModal('${service.name}', '${service.url}')" class="px-3.5 py-2 rounded-xl bg-slate-900 text-white text-xs font-semibold shadow hover:bg-indigo-600 transition-colors">
-                            Visitar App <i class="fa-solid fa-arrow-right ml-1"></i>
-                        </button>
-                    </div>
-                </div>
-            `;
-            }).join('');
-        }
-
-        // Render Services Grid
-        function renderServicesGrid(list) {
-            const grid = document.getElementById("servicesGrid");
-            const emptyState = document.getElementById("emptyState");
-            const countSpan = document.getElementById("resultsCount");
-
-            countSpan.innerText = list.length;
-
-            if (list.length === 0) {
-                grid.innerHTML = "";
-                emptyState.classList.remove("hidden");
+                `;
+                dotsContainer.innerHTML = '';
                 return;
             }
 
-            emptyState.classList.add("hidden");
-
-            grid.innerHTML = list.map(service => {
-                const mediaContent = service.image 
-                    ? `<img src="${service.image}" alt="${service.name}" class="w-12 h-12 rounded-2xl object-cover shadow-md transform group-hover:scale-105 transition-transform" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-12 h-12 rounded-2xl bg-gradient-to-tr ${service.gradient} text-white flex items-center justify-center text-xl shadow-md\'><i class=\'${service.icon}\'></i></div>';">`
-                    : `<div class="w-12 h-12 rounded-2xl bg-gradient-to-tr ${service.gradient} text-white flex items-center justify-center text-xl shadow-md transform group-hover:scale-105 transition-transform">
-                           <i class="${service.icon}"></i>
-                       </div>`;
-
-                return `
-                <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group">
-                    <div>
-                        <div class="flex items-center justify-between mb-4">
-                            ${mediaContent}
-                            <span class="px-2.5 py-1 rounded-full text-xs font-semibold border ${service.badgeColor}">
-                                ${service.category}
-                            </span>
+            sliderContainer.innerHTML = featuredItems.map((item, index) => `
+                <div class="banner-slide absolute inset-0 transition-opacity duration-1000 ${index === 0 ? 'opacity-100' : 'opacity-0'} flex items-center">
+                    <div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-transparent z-10"></div>
+                    <img src="${item.image}" onerror="this.src='https://placehold.co/1200x600/1e293b/cbd5e1?text=Destacado'" class="absolute inset-0 w-full h-full object-cover">
+                    <div class="relative z-20 max-w-2xl px-6 sm:px-12 text-white">
+                        <span class="bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-4 inline-block">${item.locality} • ${item.category}</span>
+                        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4">${item.name}</h1>
+                        <p class="text-slate-300 text-sm sm:text-base mb-6 line-clamp-2">${item.description}</p>
+                        <div class="flex gap-3">
+                            <button onclick="openModal(${item.id})" class="inline-flex items-center gap-2 bg-white text-slate-900 px-6 py-3 rounded-2xl font-semibold shadow-lg hover:bg-slate-100 transition-all">
+                                Ver Detalles <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                            <a href="https://wa.me/549${item.whatsapp}" target="_blank" class="inline-flex items-center gap-2 bg-emerald-600 text-white px-6 py-3 rounded-2xl font-semibold shadow-lg hover:bg-emerald-700 transition-all">
+                                <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                            </a>
                         </div>
-                        <h3 class="text-lg font-bold text-slate-900 mb-1 group-hover:text-indigo-600 transition-colors">${service.name}</h3>
-                        <p class="text-xs text-slate-500 leading-relaxed mb-4 line-clamp-3">${service.description}</p>
-                    </div>
-                    
-                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <div class="flex items-center space-x-1 text-xs font-bold text-amber-500">
-                            <i class="fa-solid fa-star"></i>
-                            <span class="text-slate-800">${service.rating}</span>
-                            <span class="text-slate-400 font-normal">(${service.reviewsCount})</span>
-                        </div>
-                        <button onclick="openVisitModal('${service.name}', '${service.url}')" class="px-4 py-2 rounded-xl bg-indigo-50 text-indigo-600 font-semibold text-xs hover:bg-indigo-600 hover:text-white transition-all duration-200 shadow-sm">
-                            Visitar App <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-[10px]"></i>
-                        </button>
                     </div>
                 </div>
-            `;
-            }).join('');
+            `).join('');
+
+            dotsContainer.innerHTML = featuredItems.map((_, index) => `
+                <button onclick="currentSlide(${index})" class="slider-dot w-3 h-3 rounded-full ${index === 0 ? 'bg-white' : 'bg-white/50'} hover:bg-white transition-all"></button>
+            `).join('');
         }
 
-        // Toggle Mobile Navigation Menu
-        function toggleMobileMenu() {
-            const menu = document.getElementById("mobile-menu");
-            const icon = document.getElementById("menu-icon");
-            if (menu.classList.contains("hidden")) {
-                menu.classList.remove("hidden");
-                icon.className = "fa-solid fa-xmark text-lg";
-            } else {
-                menu.classList.add("hidden");
-                icon.className = "fa-solid fa-bars text-lg";
+        function updateSlider() {
+            const slides = document.querySelectorAll('.banner-slide');
+            const dots = document.querySelectorAll('.slider-dot');
+            slides.forEach((slide, index) => {
+                slide.style.opacity = index === activeSlideIndex ? '1' : '0';
+            });
+            dots.forEach((dot, index) => {
+                dot.style.backgroundColor = index === activeSlideIndex ? 'rgba(255,255,255,1)' : 'rgba(255,255,255,0.5)';
+            });
+        }
+
+        function nextSlide() {
+            const slides = document.querySelectorAll('.banner-slide');
+            if (slides.length === 0) return;
+            activeSlideIndex = (activeSlideIndex + 1) % slides.length;
+            updateSlider();
+        }
+
+        function prevSlide() {
+            const slides = document.querySelectorAll('.banner-slide');
+            if (slides.length === 0) return;
+            activeSlideIndex = (activeSlideIndex - 1 + slides.length) % slides.length;
+            updateSlider();
+        }
+
+        function currentSlide(index) {
+            activeSlideIndex = index;
+            updateSlider();
+        }
+
+        function initSlider() {
+            renderBannerSlider();
+            if (sliderInterval) clearInterval(sliderInterval);
+            sliderInterval = setInterval(nextSlide, 5000);
+        }
+
+        // Render Category Filter Buttons & Selects
+        function renderCategories() {
+            const container = document.getElementById('category-filters-container');
+            const formSelect = document.getElementById('form-category');
+            const adminSelect = document.getElementById('admin-bus-category');
+
+            // Category filters row
+            container.innerHTML = `
+                <button onclick="filterByCategory('Todas')" class="cat-btn flex items-center gap-2 px-4 py-2.5 rounded-2xl text-sm font-semibold whitespace-nowrap transition-all ${currentCategory === 'Todas' ? 'bg-slate-900 text-white shadow-md' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
+                    <i class="fa-solid fa-border-all"></i> Todas las categorías
+                </button>
+            ` + categoriesData.map(cat => `
+                <button onclick="filterByCategory('${cat.name}')" class="cat-btn flex items-center gap-2 px-4 py-2.5 rounded-2xl text-sm font-semibold whitespace-nowrap transition-all ${currentCategory === cat.name ? 'bg-slate-900 text-white shadow-md' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
+                    <i class="${cat.icon}"></i> ${cat.name}
+                </button>
+            `).join('');
+
+            // Registration form select
+            if (formSelect) {
+                formSelect.innerHTML = categoriesData.map(cat => `<option value="${cat.name}" class="bg-slate-900">${cat.name}</option>`).join('');
+            }
+
+            // Admin form select
+            if (adminSelect) {
+                adminSelect.innerHTML = categoriesData.map(cat => `<option value="${cat.name}">${cat.name}</option>`).join('');
             }
         }
 
-        // Register Business Modal Handlers
-        function openRegisterModal() {
-            const modal = document.getElementById("registerModal");
-            const content = document.getElementById("modalContent");
-            modal.classList.remove("hidden");
-            setTimeout(() => {
-                modal.classList.remove("opacity-0");
-                content.classList.remove("scale-95");
-                content.classList.add("scale-100");
-            }, 10);
+        // Filter and Search Handlers
+        function filterByCategory(category) {
+            currentCategory = category;
+            renderCategories();
+            renderServices();
         }
 
-        function closeRegisterModal() {
-            const modal = document.getElementById("registerModal");
-            const content = document.getElementById("modalContent");
-            modal.classList.add("opacity-0");
-            content.classList.remove("scale-100");
-            content.classList.add("scale-95");
-            setTimeout(() => {
-                modal.classList.add("hidden");
-            }, 300);
+        function filterByLocation(locality) {
+            currentLocality = locality;
+            document.querySelectorAll('.loc-btn').forEach(btn => {
+                if (btn.textContent === locality) {
+                    btn.className = "loc-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all bg-blue-600 text-white shadow-sm shadow-blue-500/20";
+                } else {
+                    btn.className = "loc-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all bg-slate-100 text-slate-600 hover:bg-slate-200";
+                }
+            });
+            renderServices();
         }
 
-        // Handle Submit Form
-        function handleFormSubmit(event) {
-            event.preventDefault();
-            
-            const name = document.getElementById("formName").value;
-            const category = document.getElementById("formCategory").value;
-            const icon = document.getElementById("formIcon").value;
-            const description = document.getElementById("formDescription").value;
-            const url = document.getElementById("formUrl").value;
+        function handleSearch() {
+            searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
+            renderServices();
+        }
 
-            // Gradients array for new submissions
-            const gradients = [
-                "from-blue-500 to-indigo-600",
-                "from-purple-500 to-pink-600",
-                "from-emerald-500 to-teal-600",
-                "from-amber-500 to-orange-600",
-                "from-rose-500 to-red-600"
-            ];
+        // Render Services Grid
+        function renderServices() {
+            const grid = document.getElementById('services-grid');
+            const emptyState = document.getElementById('empty-state');
 
-            const badgeColors = {
-                "Mantenimientos": "bg-blue-50 text-blue-700 border-blue-200",
-                "Impresiones": "bg-purple-50 text-purple-700 border-purple-200",
-                "Comestibles": "bg-emerald-50 text-emerald-700 border-emerald-200",
-                "Tecnología": "bg-amber-50 text-amber-700 border-amber-200",
-                "Salud y Bienestar": "bg-rose-50 text-rose-700 border-rose-200",
-                "Belleza y Estética": "bg-fuchsia-50 text-fuchsia-700 border-fuchsia-200",
-                "Finanzas": "bg-indigo-50 text-indigo-700 border-indigo-200"
-            };
+            const filtered = servicesData.filter(item => {
+                const matchCategory = currentCategory === 'Todas' || item.category === currentCategory;
+                const matchLocality = currentLocality === 'Todas' || item.locality === currentLocality;
+                const matchSearch = item.name.toLowerCase().includes(searchQuery) || 
+                                    item.description.toLowerCase().includes(searchQuery) ||
+                                    item.category.toLowerCase().includes(searchQuery);
+                return matchCategory && matchLocality && matchSearch;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            grid.innerHTML = filtered.map(item => `
+                <div class="bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="relative h-48 overflow-hidden bg-slate-100">
+                            <img src="${item.image}" alt="${item.name}" onerror="this.src='https://placehold.co/600x400/e2e8f0/64748b?text=Local'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-3 left-3 flex gap-2">
+                                <span class="bg-white/90 backdrop-blur-sm text-slate-800 text-xs font-semibold px-3 py-1 rounded-full shadow-sm">
+                                    ${item.category}
+                                </span>
+                                ${item.featured ? '<span class="bg-amber-500 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-sm"><i class="fa-solid fa-star"></i> Destacado</span>' : ''}
+                            </div>
+                            <div class="absolute top-3 right-3">
+                                <span class="bg-slate-900/80 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 rounded-full shadow-sm">
+                                    ${item.locality}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-slate-800 mb-2 group-hover:text-blue-600 transition-colors">${item.name}</h3>
+                            <p class="text-slate-600 text-sm line-clamp-2 leading-relaxed mb-4">${item.description}</p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-0 flex items-center justify-between gap-3 border-t border-slate-50 pt-4">
+                        <a href="https://wa.me/549${item.whatsapp}" target="_blank" class="flex-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs font-semibold py-2.5 px-3 rounded-xl text-center transition-colors flex items-center justify-center gap-1.5">
+                            <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp
+                        </a>
+                        <button onclick="openModal(${item.id})" class="flex-1 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold py-2.5 px-3 rounded-xl text-center transition-colors flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-circle-info text-sm"></i> Ver más
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Modal Controls
+        function openModal(id) {
+            const item = servicesData.find(s => s.id === id);
+            if (!item) return;
+
+            document.getElementById('modal-img').src = item.image;
+            document.getElementById('modal-category').textContent = item.category;
+            document.getElementById('modal-locality').textContent = item.locality;
+            document.getElementById('modal-title').textContent = item.name;
+            document.getElementById('modal-desc').textContent = item.description;
+            document.getElementById('modal-whatsapp').href = `https://wa.me/549${item.whatsapp}`;
+            document.getElementById('modal-link').href = item.website || '#';
+
+            const modal = document.getElementById('details-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('details-modal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+        }
+
+        // Designer Authentication & Dashboard Logic
+        function openDesignerLoginModal() {
+            const modal = document.getElementById('designer-login-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeDesignerLoginModal() {
+            const modal = document.getElementById('designer-login-modal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+        }
+
+        function handleDesignerLogin(e) {
+            e.preventDefault();
+            const pass = document.getElementById('designer-password').value;
+            if (pass === 'Hjs2154') {
+                closeDesignerLoginModal();
+                document.getElementById('designer-password').value = '';
+                openDesignerDashboard();
+                showToast("¡Bienvenido Diseñador!", "Acceso concedido al panel de administración.");
+            } else {
+                showToast("Clave incorrecta", "La clave de acceso ingresada no es válida.");
+            }
+        }
+
+        function openDesignerDashboard() {
+            renderAdminBusinessList();
+            renderAdminCategoryList();
+            const modal = document.getElementById('designer-dashboard-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeDesignerDashboard() {
+            const modal = document.getElementById('designer-dashboard-modal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+            initSlider();
+            renderCategories();
+            renderServices();
+        }
+
+        function switchAdminTab(tab) {
+            const tabNegocios = document.getElementById('admin-tab-negocios');
+            const tabCategorias = document.getElementById('admin-tab-categorias');
+            const btnNegocios = document.getElementById('tab-btn-negocios');
+            const btnCategorias = document.getElementById('tab-btn-categorias');
+
+            if (tab === 'negocios') {
+                tabNegocios.classList.remove('hidden');
+                tabCategorias.classList.add('hidden');
+                btnNegocios.className = "px-5 py-2.5 rounded-2xl font-semibold text-sm transition-all bg-slate-900 text-white";
+                btnCategorias.className = "px-5 py-2.5 rounded-2xl font-semibold text-sm transition-all bg-slate-100 text-slate-600 hover:bg-slate-200";
+            } else {
+                tabNegocios.classList.add('hidden');
+                tabCategorias.classList.remove('hidden');
+                btnCategorias.className = "px-5 py-2.5 rounded-2xl font-semibold text-sm transition-all bg-slate-900 text-white";
+                btnNegocios.className = "px-5 py-2.5 rounded-2xl font-semibold text-sm transition-all bg-slate-100 text-slate-600 hover:bg-slate-200";
+            }
+        }
+
+        // Admin Business CRUD
+        function renderAdminBusinessList() {
+            const list = document.getElementById('admin-business-list');
+            list.innerHTML = servicesData.map(item => `
+                <div class="bg-white border border-slate-200 rounded-2xl p-4 flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <img src="${item.image}" onerror="this.src='https://placehold.co/100x100/e2e8f0/64748b?text=Local'" class="w-12 h-12 rounded-xl object-cover">
+                        <div>
+                            <h5 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                                ${item.name} 
+                                ${item.featured ? '<span class="bg-amber-100 text-amber-700 text-[10px] px-2 py-0.5 rounded-full font-bold">Destacado</span>' : ''}
+                            </h5>
+                            <p class="text-xs text-slate-400">${item.locality} • ${item.category}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="editBusiness(${item.id})" class="p-2 bg-slate-100 hover:bg-blue-50 text-slate-600 hover:text-blue-600 rounded-xl text-xs transition-colors"><i class="fa-solid fa-pen"></i></button>
+                        <button onclick="deleteBusiness(${item.id})" class="p-2 bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 rounded-xl text-xs transition-colors"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function handleAdminBusinessSubmit(e) {
+            e.preventDefault();
+            const id = document.getElementById('admin-bus-id').value;
+            const name = document.getElementById('admin-bus-name').value;
+            const category = document.getElementById('admin-bus-category').value;
+            const locality = document.getElementById('admin-bus-locality').value;
+            const phone = document.getElementById('admin-bus-phone').value;
+            const website = document.getElementById('admin-bus-website').value;
+            const image = document.getElementById('admin-bus-image').value;
+            const description = document.getElementById('admin-bus-desc').value;
+            const featured = document.getElementById('admin-bus-featured').checked;
+
+            if (id) {
+                // Edit
+                const index = servicesData.findIndex(s => s.id == id);
+                if (index !== -1) {
+                    servicesData[index] = { id: Number(id), name, category, locality, whatsapp: phone.replace(/\D/g,''), website, image, description, featured };
+                }
+                showToast("¡Negocio actualizado!", "Los datos del comercio fueron modificados con éxito.");
+            } else {
+                // Create
+                const newId = servicesData.length > 0 ? Math.max(...servicesData.map(s => s.id)) + 1 : 1;
+                servicesData.unshift({ id: newId, name, category, locality, whatsapp: phone.replace(/\D/g,''), website, image, description, featured });
+                showToast("¡Negocio creado!", "El nuevo comercio fue agregado al directorio y banner.");
+            }
+
+            saveToLocalStorage();
+            resetAdminBusForm();
+            renderAdminBusinessList();
+        }
+
+        function editBusiness(id) {
+            const item = servicesData.find(s => s.id === id);
+            if (!item) return;
+            document.getElementById('admin-bus-id').value = item.id;
+            document.getElementById('admin-bus-name').value = item.name;
+            document.getElementById('admin-bus-category').value = item.category;
+            document.getElementById('admin-bus-locality').value = item.locality;
+            document.getElementById('admin-bus-phone').value = item.whatsapp;
+            document.getElementById('admin-bus-website').value = item.website || '';
+            document.getElementById('admin-bus-image').value = item.image;
+            document.getElementById('admin-bus-desc').value = item.description;
+            document.getElementById('admin-bus-featured').checked = item.featured || false;
+            document.getElementById('admin-bus-submit-btn').textContent = "Actualizar Negocio";
+        }
+
+        function deleteBusiness(id) {
+            if (confirm("¿Estás seguro de eliminar este negocio?")) {
+                servicesData = servicesData.filter(s => s.id !== id);
+                saveToLocalStorage();
+                renderAdminBusinessList();
+                showToast("Negocio eliminado", "El elemento fue removido del directorio.");
+            }
+        }
+
+        function resetAdminBusForm() {
+            document.getElementById('admin-business-form').reset();
+            document.getElementById('admin-bus-id').value = '';
+            document.getElementById('admin-bus-submit-btn').textContent = "Guardar Negocio";
+        }
+
+        // Admin Category CRUD
+        function renderAdminCategoryList() {
+            const list = document.getElementById('admin-category-list');
+            list.innerHTML = categoriesData.map(cat => `
+                <div class="bg-white border border-slate-200 rounded-2xl p-4 flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center text-lg">
+                            <i class="${cat.icon}"></i>
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-slate-800 text-sm">${cat.name}</h5>
+                            <p class="text-xs text-slate-400">Icono: ${cat.icon}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="editCategory('${cat.name}')" class="p-2 bg-slate-100 hover:bg-blue-50 text-slate-600 hover:text-blue-600 rounded-xl text-xs transition-colors"><i class="fa-solid fa-pen"></i></button>
+                        <button onclick="deleteCategory('${cat.name}')" class="p-2 bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 rounded-xl text-xs transition-colors"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function handleAdminCatSubmit(e) {
+            e.preventDefault();
+            const oldName = document.getElementById('admin-cat-old-name').value;
+            const name = document.getElementById('admin-cat-name').value.trim();
+            const icon = document.getElementById('admin-cat-icon').value.trim();
+
+            if (oldName) {
+                // Edit category name & icon
+                const cat = categoriesData.find(c => c.name === oldName);
+                if (cat) {
+                    cat.name = name;
+                    cat.icon = icon;
+                }
+                // Update services using this category
+                servicesData.forEach(s => {
+                    if (s.category === oldName) s.category = name;
+                });
+                showToast("¡Categoría actualizada!", "Los cambios se aplicaron correctamente.");
+            } else {
+                // Create new category
+                if (categoriesData.some(c => c.name.toLowerCase() === name.toLowerCase())) {
+                    showToast("Error", "Ya existe una categoría con ese nombre.");
+                    return;
+                }
+                categoriesData.push({ name, icon });
+                showToast("¡Categoría creada!", "La nueva categoría está lista para usar.");
+            }
+
+            saveToLocalStorage();
+            resetAdminCatForm();
+            renderAdminCategoryList();
+            renderCategories();
+        }
+
+        function editCategory(name) {
+            const cat = categoriesData.find(c => c.name === name);
+            if (!cat) return;
+            document.getElementById('admin-cat-old-name').value = cat.name;
+            document.getElementById('admin-cat-name').value = cat.name;
+            document.getElementById('admin-cat-icon').value = cat.icon;
+            document.getElementById('admin-cat-submit-btn').textContent = "Actualizar Categoría";
+        }
+
+        function deleteCategory(name) {
+            if (categoriesData.length <= 1) {
+                showToast("Acción no permitida", "Debe existir al menos una categoría.");
+                return;
+            }
+            if (confirm(`¿Estás seguro de eliminar la categoría "${name}"?`)) {
+                categoriesData = categoriesData.filter(c => c.name !== name);
+                saveToLocalStorage();
+                renderAdminCategoryList();
+                renderCategories();
+                showToast("Categoría eliminada", "Se removió la categoría del sistema.");
+            }
+        }
+
+        function resetAdminCatForm() {
+            document.getElementById('admin-cat-form').reset();
+            document.getElementById('admin-cat-old-name').value = '';
+            document.getElementById('admin-cat-submit-btn').textContent = "Guardar Categoría";
+        }
+
+        // Public Form Submit Handler
+        function handleFormSubmit(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('form-name').value;
+            const category = document.getElementById('form-category').value;
+            const locality = document.getElementById('form-locality').value;
+            const phone = document.getElementById('form-phone').value;
+            const website = document.getElementById('form-website').value;
+            const image = document.getElementById('form-image').value || 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80';
+            const description = document.getElementById('form-desc').value;
 
             const newService = {
-                id: servicesData.length + 1,
-                name: name,
-                category: category,
-                description: description,
-                rating: 5.0,
-                reviewsCount: 1,
-                icon: icon,
-                url: url,
-                featured: false,
-                badgeColor: badgeColors[category] || "bg-slate-50 text-slate-700 border-slate-200",
-                gradient: gradients[Math.floor(Math.random() * gradients.length)]
+                id: servicesData.length > 0 ? Math.max(...servicesData.map(s => s.id)) + 1 : 1,
+                name,
+                category,
+                locality,
+                description,
+                image,
+                website,
+                whatsapp: phone.replace(/\D/g,''),
+                featured: false
             };
 
             servicesData.unshift(newService);
-            closeRegisterModal();
-            document.getElementById("submitBusinessForm").reset();
-            
-            // Re-render
-            filterServices();
-            renderFeaturedBanner();
+            saveToLocalStorage();
+            renderServices();
 
-            // Show Toast Notification
-            showToast("¡Servicio añadido con éxito!", "Tu negocio ya está visible en el directorio.");
+            document.getElementById('business-form').reset();
+            showToast("¡Negocio agregado con éxito!", `${name} ya se encuentra publicado en el directorio.`);
         }
 
-        // Visit Action Modal Handlers
-        function openVisitModal(appName, appUrl) {
-            const modal = document.getElementById("visitModal");
-            const content = document.getElementById("visitModalContent");
-            
-            document.getElementById("visitModalTitle").innerText = `Visitar ${appName}`;
-            document.getElementById("visitModalUrl").innerText = appUrl;
-            document.getElementById("visitModalLink").href = appUrl;
+        function showToast(title, desc) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-title').textContent = title;
+            document.getElementById('toast-desc').textContent = desc;
 
-            modal.classList.remove("hidden");
-            setTimeout(() => {
-                modal.classList.remove("opacity-0");
-                content.classList.remove("scale-95");
-                content.classList.add("scale-100");
-            }, 10);
-        }
-
-        function closeVisitModal() {
-            const modal = document.getElementById("visitModal");
-            const content = document.getElementById("visitModalContent");
-            modal.classList.add("opacity-0");
-            content.classList.remove("scale-100");
-            content.classList.add("scale-95");
-            setTimeout(() => {
-                modal.classList.add("hidden");
-            }, 300);
-        }
-
-        // Toast Notification Function
-        function showToast(title, message) {
-            const container = document.getElementById("toast-container");
-            const toast = document.createElement("div");
-            toast.className = "pointer-events-auto bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center space-x-3 transform translate-y-5 opacity-0 transition-all duration-300 border border-slate-800";
-            toast.innerHTML = `
-                <div class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center text-sm font-bold flex-shrink-0">
-                    <i class="fa-solid fa-check"></i>
-                </div>
-                <div>
-                    <h5 class="font-bold text-sm">${title}</h5>
-                    <p class="text-xs text-slate-400">${message}</p>
-                </div>
-            `;
-            container.appendChild(toast);
+            toast.classList.remove('translate-y-28', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
 
             setTimeout(() => {
-                toast.classList.remove("translate-y-5", "opacity-0");
-            }, 50);
-
-            setTimeout(() => {
-                toast.classList.add("translate-y-5", "opacity-0");
-                setTimeout(() => toast.remove(), 300);
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-28', 'opacity-0');
             }, 4000);
         }
     </script>
